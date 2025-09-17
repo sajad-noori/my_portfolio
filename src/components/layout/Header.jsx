@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { FiGithub, FiMenu, FiX } from 'react-icons/fi';
 import '../../styles/Header.css';
 
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   // Close mobile menu when clicking outside
   useEffect(() => {
@@ -35,11 +37,37 @@ const Header = () => {
         </div>
         
         <ul className="nav-links">
-          <li><NavLink to="/" end className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink></li>
-          <li><NavLink to="/about" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About</NavLink></li>
-          <li><NavLink to="/projects" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Projects</NavLink></li>
-          <li><NavLink to="/skills" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Skills</NavLink></li>
-          <li><NavLink to="/contact" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contact</NavLink></li>
+          {[
+            { to: '/', text: 'Home', end: true },
+            { to: '/about', text: 'About' },
+            { to: '/projects', text: 'Projects' },
+            { to: '/skills', text: 'Skills' },
+            { to: '/contact', text: 'Contact' }
+          ].map(({ to, text, end = false }) => (
+            <motion.li 
+              key={to}
+              whileHover={{ y: -2 }}
+              whileTap={{ y: 0 }}
+              className="nav-item"
+            >
+              <NavLink 
+                to={to} 
+                end={end}
+                className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+              >
+                {text}
+                <motion.span 
+                  className="nav-link-underline"
+                  initial={{ scaleX: 0, opacity: 0 }}
+                  animate={{ 
+                    scaleX: (location.pathname === to || (to === '/' && location.pathname === '/')) ? 1 : 0, 
+                    opacity: (location.pathname === to || (to === '/' && location.pathname === '/')) ? 1 : 0 
+                  }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                />
+              </NavLink>
+            </motion.li>
+          ))}
         </ul>
         
         <div className="github-container">

@@ -1,8 +1,9 @@
 import React from 'react';
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
-import { FiCode, FiServer, FiDatabase, FiCpu, FiTool, FiLayers } from 'react-icons/fi';
-import { FaReact, FaNodeJs, FaPython, FaAws, FaDocker, FaGitAlt } from 'react-icons/fa';
-import { SiJavascript, SiTypescript, SiHtml5, SiCss3, SiRedux, SiGraphql, SiMongodb, SiPostgresql, SiRedis, SiFirebase, SiDjango, SiFlask, SiJest, SiCypress, SiWebpack, SiBabel } from 'react-icons/si';
+import { FiCode, FiServer, FiDatabase, FiCpu, FiLayers, FiTool } from 'react-icons/fi';
+import { FaReact, FaNodeJs, FaVuejs, FaDocker, FaGitAlt } from 'react-icons/fa';
+import { SiJavascript, SiTypescript, SiHtml5, SiCss3, SiExpress, SiMongodb, SiFirebase, SiMysql } from 'react-icons/si';
 import '../styles/Skills.css';
 
 const Skills = () => {
@@ -11,12 +12,12 @@ const Skills = () => {
       category: 'Frontend',
       icon: <FiCode />,
       items: [
-        { name: 'React', icon: <FaReact />, level: 90 },
+        { name: 'React.js', icon: <FaReact />, level: 90 },
         { name: 'JavaScript', icon: <SiJavascript />, level: 90 },
         { name: 'TypeScript', icon: <SiTypescript />, level: 80 },
-        { name: 'HTML5', icon: <SiHtml5 />, level: 85 },
+        { name: 'Vue.js', icon: <FaVuejs />, level: 75 },
+        { name: 'HTML5', icon: <SiHtml5 />, level: 90 },
         { name: 'CSS3', icon: <SiCss3 />, level: 85 },
-        { name: 'Redux', icon: <SiRedux />, level: 85 },
       ]
     },
     {
@@ -24,11 +25,7 @@ const Skills = () => {
       icon: <FiServer />,
       items: [
         { name: 'Node.js', icon: <FaNodeJs />, level: 85 },
-        { name: 'Express', icon: <FiServer />, level: 85 },
-        { name: 'Python', icon: <FaPython />, level: 80 },
-        { name: 'Django', icon: <SiDjango />, level: 75 },
-        { name: 'Flask', icon: <SiFlask />, level: 70 },
-        { name: 'GraphQL', icon: <SiGraphql />, level: 80 },
+        { name: 'Express.js', icon: <SiExpress />, level: 80 },
       ]
     },
     {
@@ -36,21 +33,16 @@ const Skills = () => {
       icon: <FiDatabase />,
       items: [
         { name: 'MongoDB', icon: <SiMongodb />, level: 85 },
-        { name: 'PostgreSQL', icon: <SiPostgresql />, level: 80 },
-        { name: 'Redis', icon: <SiRedis />, level: 75 },
+        { name: 'MySQL', icon: <SiMysql />, level: 80 },
         { name: 'Firebase', icon: <SiFirebase />, level: 80 },
       ]
     },
     {
-      category: 'DevOps & Tools',
+      category: 'Tools',
       icon: <FiCpu />,
       items: [
-        { name: 'Docker', icon: <FaDocker />, level: 80 },
-        { name: 'AWS', icon: <FaAws />, level: 75 },
-        { name: 'Git', icon: <FaGitAlt />, level: 85 },
-        { name: 'Jest', icon: <SiJest />, level: 80 },
-        { name: 'Cypress', icon: <SiCypress />, level: 75 },
-        { name: 'Webpack', icon: <SiWebpack />, level: 70 },
+        { name: 'Git', icon: <FaGitAlt />, level: 90 },
+        { name: 'Docker', icon: <FaDocker />, level: 80 }
       ]
     }
   ];
@@ -97,7 +89,7 @@ const Skills = () => {
           animate="show"
           className="skills-grid"
         >
-          {skills.map((category, index) => (
+          {skills.map((category) => (
             <motion.div 
               key={category.category}
               variants={item}
@@ -108,7 +100,7 @@ const Skills = () => {
                 {category.category}
               </h2>
               <ul className="skills-list">
-                {category.items.map((skill, skillIndex) => (
+                {category.items.map((skill) => (
                   <motion.li 
                     key={skill.name}
                     className="skill-item"
