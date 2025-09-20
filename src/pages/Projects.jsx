@@ -14,70 +14,15 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: 'E-commerce Platform',
-      description: 'A full-featured e-commerce platform with product listings, cart, and payment integration.',
-      tags: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-      image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      github: '#',
-      live: '#',
+      title: 'Department of Quality Assurance',
+      description: 'A website designed for the Department of Quality Assurance of TVETA',
+      tags: ['React', 'Node.js', 'MySQL'],
+      image: '/department of quality assurance.png',
+      github: 'https://github.com/sajad-noori/department-of-quality-assurance',
       category: 'Full Stack',
       icon: <FiGlobe className="w-6 h-6 text-blue-500" />
     },
-    {
-      id: 2,
-      title: 'Task Management App',
-      description: 'A collaborative task management application with real-time updates and team features.',
-      tags: ['React', 'Firebase', 'Material-UI', 'Redux'],
-      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      github: '#',
-      live: '#',
-      category: 'Frontend',
-      icon: <FiLayers className="w-6 h-6 text-green-500" />
-    },
-    {
-      id: 3,
-      title: 'Portfolio Website',
-      description: 'A modern portfolio website built with React and Tailwind CSS.',
-      tags: ['React', 'Tailwind CSS', 'Framer Motion'],
-      image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80',
-      github: '#',
-      live: '#',
-      category: 'Frontend',
-      icon: <FiCode className="w-6 h-6 text-purple-500" />
-    },
-    {
-      id: 4,
-      title: 'RESTful API Service',
-      description: 'A scalable REST API with authentication and role-based access control.',
-      tags: ['Node.js', 'Express', 'MongoDB', 'JWT'],
-      image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      github: '#',
-      live: '#',
-      category: 'Backend',
-      icon: <FiDatabase className="w-6 h-6 text-yellow-500" />
-    },
-    {
-      id: 5,
-      title: 'Weather Dashboard',
-      description: 'A weather application showing current and forecasted weather data.',
-      tags: ['React', 'OpenWeather API', 'Chart.js'],
-      image: 'https://images.unsplash.com/photo-1601134467661-3d775b99c7b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1540&q=80',
-      github: '#',
-      live: '#',
-      category: 'Frontend',
-      icon: <FiGlobe className="w-6 h-6 text-blue-400" />
-    },
-    {
-      id: 6,
-      title: 'Chat Application',
-      description: 'Real-time chat application with private messaging and group chats.',
-      tags: ['React', 'Socket.io', 'Node.js', 'MongoDB'],
-      image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80',
-      github: '#',
-      live: '#',
-      category: 'Full Stack',
-      icon: <FiMessageSquare className="w-6 h-6 text-indigo-500" />
-    },
+    
   ];
 
   const categories = ['All', ...new Set(projects.map(project => project.category))];
@@ -207,14 +152,6 @@ const Projects = () => {
                       className="project-link"
                     >
                       <FiGithub /> Code
-                    </a>
-                    <a 
-                      href={project.live} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="project-link live-demo"
-                    >
-                      <FiExternalLink /> Live Demo
                     </a>
                   </div>
                 </div>
