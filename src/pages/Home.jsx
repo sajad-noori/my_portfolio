@@ -138,14 +138,14 @@ const Home = () => {
             <div className="code-content">
               <pre className="code-block">
                 <code>
-                  <span className="code-keyword">const</span> <span className="code-variable">Mukhlis</span> = {'{'}
+                  <span className="code-keyword">const</span> <span className="code-variable">SajadNoori</span> = {'{'}
                   <br />
                   <span className="code-property">  role</span>: <span className="code-string">'Full Stack Developer'</span>,<br />
                   <span className="code-property">  technologies</span>: [
                   <br />
-                  <span className="code-string">    'React'</span>, <span className="code-string">'Node.js'</span>, <span className="code-string">'TypeScript'</span>,
+                  <span className="code-string">    'React'</span>, <span className="code-string">'Node.js'</span>, <span className="code-string">'JavaScript'</span>,
                   <br />
-                  <span className="code-string">    'Next.js'</span>, <span className="code-string">'Tailwind CSS'</span>, <span className="code-string">'AWS'</span>
+                  <span className="code-string">    'Mysql'</span>, <span className="code-string">'Tailwind CSS'</span>, <span className="code-string">'Express.js'</span>
                   <br />
                   <span className="code-property">  ]</span>,<br />
                   <span className="code-property">  passion</span>: <span className="code-string">'Creating exceptional digital experiences'</span>
