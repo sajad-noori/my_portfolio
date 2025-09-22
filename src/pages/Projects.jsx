@@ -22,7 +22,16 @@ const Projects = () => {
       category: 'Full Stack',
       icon: <FiGlobe className="w-6 h-6 text-blue-500" />
     },
-    
+    {
+      id: 2,
+      title: 'BLog',
+      description: 'A blog website',
+      tags: ['Next.js', 'MySQL'],
+      image: '/blog.png',
+      github: 'https://github.com/sajad-noori/blog',
+      category: 'Full Stack',
+      icon: <FiGlobe className="w-6 h-6 text-blue-500" />
+    }
   ];
 
   const categories = ['All', ...new Set(projects.map(project => project.category))];
