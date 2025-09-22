@@ -66,7 +66,8 @@
   position: relative;
   padding: 0.5rem 0.25rem;
   transition: color 0.3s ease;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
@@ -105,7 +106,7 @@
 
 /* Add a subtle background on hover */
 .nav-link::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -125,7 +126,7 @@
 }
 
 .nav-link::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -156,14 +157,53 @@
 
 /* Add a subtle pulse animation on active link */
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.2); }
-  70% { box-shadow: 0 0 0 6px rgba(37, 99, 235, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
 }
 
 .nav-link:active {
   transform: translateY(0);
   animation: pulse 0.8s ease-out;
+}
+
+/* Header Actions */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  width: 36px;
+  height: 36px;
+}
+
+.theme-toggle:hover {
+  background: var(--hover-bg);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:focus {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
 }
 
 /* GitHub Link Styles */
@@ -234,37 +274,73 @@
 }
 
 /* Responsive Design */
+/* Mobile Theme Toggle */
+.mobile-theme-toggle {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: 0.5rem;
+}
+
+.mobile-theme-toggle .theme-toggle {
+  width: 100%;
+  height: auto;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  justify-content: flex-start;
+  gap: 0.75rem;
+  font-weight: 500;
+  color: var(--text-color);
+  background: var(--hover-bg);
+}
+
+.mobile-theme-toggle .theme-toggle:hover {
+  background: var(--border-color);
+  transform: none;
+}
+
+@media (max-width: 767px) {
+  .nav {
+    padding: 0 1rem;
+  }
+
+  .nav-links {
+    display: none !important; /* Ensure it's always hidden on mobile */
+  }
+
+  .github-container {
+    display: none !important; /* Ensure it's always hidden on mobile */
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  /* Ensure mobile menu is properly positioned and styled */
+  .mobile-menu {
+    display: block;
+  }
+
+  /* Hide mobile menu when not active */
+  .mobile-menu:not(.active) {
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
 @media (max-width: 1024px) {
   .nav-links {
     gap: 1rem;
   }
-  
+
   .nav-link {
     font-size: 0.9rem;
   }
 }
 
-@media (max-width: 768px) {
-  .nav {
-    padding: 0 1rem;
-  }
-  
-  .nav-links {
-    display: none;
-  }
-  
-  .github-container {
-    display: none;
-  }
-  
-  .menu-toggle {
-    display: block;
-  }
-}
-
 /* Mobile Menu */
 .mobile-menu {
-  display: none;
   position: fixed;
   top: 70px;
   left: 0;
@@ -277,13 +353,14 @@
   overflow-y: auto;
   transform: translateY(-100%);
   opacity: 0;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  visibility: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease, visibility 0.3s ease;
 }
 
 .mobile-menu.active {
-  display: block;
   transform: translateY(0);
   opacity: 1;
+  visibility: visible;
   animation: slideDown 0.3s ease-out;
 }
 
@@ -353,7 +430,8 @@
   width: 100%;
   max-width: 200px;
   transition: all 0.2s ease;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    sans-serif;
 }
 
 .mobile-github:hover,
@@ -367,54 +445,79 @@
   font-size: 1.25rem;
 }
 
+/* Dark mode styles */
+[data-theme="dark"] {
+  --bg-color: #0f172a;
+  --bg-secondary: #1e293b;
+  --text-color: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --primary-color: #60a5fa;
+  --hover-bg: rgba(255, 255, 255, 0.1);
+  --border-color: #334155;
+}
+
+/* Light mode styles */
+[data-theme="light"] {
+  --bg-color: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-color: #1e293b;
+  --text-secondary: #64748b;
+  --primary-color: #2563eb;
+  --hover-bg: rgba(0, 0, 0, 0.05);
+  --border-color: #e2e8f0;
+}
+
+/* Apply theme variables */
+:root {
+  --bg-color: #f8fafc;
+  --bg-secondary: #ffffff;
+  --text-color: #1e293b;
+  --text-secondary: #64748b;
+  --primary-color: #2563eb;
+  --hover-bg: rgba(0, 0, 0, 0.05);
+  --border-color: #e2e8f0;
+}
+
+/* Update header styles to use theme variables */
+.header {
+  background: var(--bg-secondary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.nav-link {
+  color: var(--text-color);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--primary-color);
+}
+
+.mobile-menu {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+}
+
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
-  .header {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .nav-link {
-    color: #e2e8f0;
-  }
-  
-  .nav-link:hover,
-  .nav-link.active {
-    color: #60a5fa;
-  }
-  
-  .mobile-menu {
-    background: #0f172a;
-    border-top: 1px solid rgba(30, 41, 59, 0.8);
-  }
-  
-  .mobile-links a {
-    color: #e2e8f0;
-  }
-  
-  .mobile-links a:hover,
-  .mobile-links a:focus,
-  .mobile-links a.active {
-    color: #60a5fa;
-    background: #1e293b;
-  }
-  
+  /* These styles are now handled by the theme variables */
+
   .mobile-github {
     background: rgba(37, 99, 235, 0.1);
     border-color: rgba(37, 99, 235, 0.2);
     color: #60a5fa;
   }
-  
+
   .mobile-github:hover,
   .mobile-github:focus {
     background: rgba(37, 99, 235, 0.2);
     border-color: rgba(37, 99, 235, 0.3);
   }
-  
+
   .menu-toggle {
     color: #e2e8f0;
   }
-  
+
   .menu-toggle:hover {
     background: rgba(30, 41, 59, 0.8);
   }
