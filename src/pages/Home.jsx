@@ -11,12 +11,8 @@ import {
   FiPhone,
   FiMail,
 } from "react-icons/fi";
-import {
-  motion,
-  useAnimation,
-  useInView,
-  AnimatePresence,
-} from "framer-motion";
+// eslint-disable-next-line no-unused-vars
+import { motion, useAnimation, useInView, AnimatePresence } from "framer-motion";
 import { useTheme } from "../hooks/useTheme";
 import "../styles/Home.css"; // Import the CSS file for this component
 

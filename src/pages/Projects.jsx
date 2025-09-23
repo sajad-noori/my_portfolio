@@ -8,14 +8,30 @@ import {
   FiGlobe,
   FiMessageSquare,
 } from "react-icons/fi";
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../hooks/useTheme";
 import "../styles/Projects.css";
+import { useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Projects = () => {
   const { theme } = useTheme();
   const [activeFilter, setActiveFilter] = useState("All");
   const [isMounted, setIsMounted] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const handleContactClick = useCallback((e) => {
+    e.preventDefault();
+    // Navigate to the contact page
+    navigate('/contact');
+    
+    // Scroll to top of the contact page after navigation
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+  }, [navigate]);
 
   useEffect(() => {
     setIsMounted(true);
@@ -204,16 +220,37 @@ const Projects = () => {
           </p>
           <div className="cta-buttons">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/sajad-noori"
               target="_blank"
               rel="noopener noreferrer"
               className="primary-button"
             >
               <FiGithub className="icon" /> View on GitHub
             </a>
-            <a href="#contact" className="secondary-button">
-              <FiMessageSquare className="icon" /> Contact Me
-            </a>
+            <motion.button 
+              className="secondary-button cursor-pointer"
+              onClick={handleContactClick}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              animate={{
+                scale: isHovered ? 1.05 : 1,
+                transition: { duration: 0.2 }
+              }}
+            >
+              <motion.span 
+                animate={{
+                  x: isHovered ? [0, 5, -5, 5, 0] : 0,
+                }}
+                transition={{
+                  duration: 0.5,
+                  repeat: isHovered ? Infinity : 0,
+                  repeatType: 'reverse'
+                }}
+              >
+                <FiMessageSquare className="icon" />
+              </motion.span>
+              <span>Contact Me</span>
+            </motion.button>
           </div>
         </motion.div>
       </div>
