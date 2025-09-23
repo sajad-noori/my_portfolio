@@ -33,7 +33,10 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <header className="header">
+    <header
+      className={`header ${theme === "dark" ? "theme-dark" : "theme-light"}`}
+      data-theme={theme}
+    >
       <nav className="nav container">
         <div className="nav-brand">
           <NavLink to="/" className="logo">
@@ -90,9 +93,12 @@ const Header = () => {
             <button
               className="theme-toggle"
               onClick={toggleTheme}
-              aria-label={`Switch to ${
-                theme === "light" ? "dark" : "light"
-              } mode`}
+              aria-label={
+                theme === "light" ? "Activate dark mode" : "Activate light mode"
+              }
+              title={
+                theme === "light" ? "Activate dark mode" : "Activate light mode"
+              }
             >
               {theme === "light" ? <FiMoon size={20} /> : <FiSun size={20} />}
             </button>
@@ -119,7 +125,12 @@ const Header = () => {
         </button>
 
         {/* Mobile Menu */}
-        <div className={`mobile-menu ${isMenuOpen ? "active" : ""}`}>
+        <div
+          className={`mobile-menu ${isMenuOpen ? "active" : ""} ${
+            theme === "dark" ? "theme-dark" : "theme-light"
+          }`}
+          data-theme={theme}
+        >
           <ul className="mobile-links">
             <li>
               <NavLink
@@ -174,9 +185,16 @@ const Header = () => {
                   setIsMenuOpen(false);
                 }}
                 className="theme-toggle"
-                aria-label={`Switch to ${
-                  theme === "light" ? "dark" : "light"
-                } mode`}
+                aria-label={
+                  theme === "light"
+                    ? "Activate dark mode"
+                    : "Activate light mode"
+                }
+                title={
+                  theme === "light"
+                    ? "Activate dark mode"
+                    : "Activate light mode"
+                }
               >
                 {theme === "light" ? (
                   <>

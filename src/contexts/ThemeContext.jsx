@@ -1,40 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { ThemeContext } from './theme';
+import React, { useEffect, useState } from "react";
+import { ThemeContext } from "./theme";
+
+// Function to get initial theme
+const getInitialTheme = () => {
+  try {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      return savedTheme;
+    }
+
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    return systemPrefersDark ? "dark" : "light";
+  } catch (error) {
+    console.error("Error accessing localStorage or matchMedia:", error);
+    return "light";
+  }
+};
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(getInitialTheme);
 
-  // Initialize theme from localStorage or system preference
+  // Apply theme class to document element and save to localStorage
   useEffect(() => {
     try {
-      const savedTheme = localStorage.getItem('theme');
-      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      
-      if (savedTheme) {
-        setTheme(savedTheme);
-      } else if (systemPrefersDark) {
-        setTheme('dark');
-      } else {
-        setTheme('light');
-      }
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
     } catch (error) {
-      console.error('Error accessing localStorage or matchMedia:', error);
-      setTheme('light');
-    }
-  }, []);
-
-  // Apply theme class to document element
-  useEffect(() => {
-    try {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
-    } catch (error) {
-      console.error('Error setting theme:', error);
+      console.error("Error setting theme:", error);
     }
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
   };
 
   return (
