@@ -22,16 +22,19 @@ const Projects = () => {
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
-  const handleContactClick = useCallback((e) => {
-    e.preventDefault();
-    // Navigate to the contact page
-    navigate('/contact');
-    
-    // Scroll to top of the contact page after navigation
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
-  }, [navigate]);
+  const handleContactClick = useCallback(
+    (e) => {
+      e.preventDefault();
+      // Navigate to the contact page
+      navigate("/contact");
+
+      // Scroll to top of the contact page after navigation
+      setTimeout(() => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 100);
+    },
+    [navigate]
+  );
 
   useEffect(() => {
     setIsMounted(true);
@@ -56,6 +59,17 @@ const Projects = () => {
       tags: ["Next.js", "MySQL"],
       image: "/blog.png",
       github: "https://github.com/sajad-noori/blog",
+      category: "Full Stack",
+      icon: <FiGlobe className="w-6 h-6 text-blue-500" />,
+    },
+    {
+      id: 3,
+      title: "Don't Forget",
+      description:
+        "A mobile app the remind you things in specific time, place and situtation.",
+      tags: ["React Native", "Expo"],
+      image: "/dontforget.png",
+      github: "https://github.com/sajad-noori/dont_forget",
       category: "Full Stack",
       icon: <FiGlobe className="w-6 h-6 text-blue-500" />,
     },
@@ -227,24 +241,24 @@ const Projects = () => {
             >
               <FiGithub className="icon" /> View on GitHub
             </a>
-            <motion.button 
+            <motion.button
               className="secondary-button cursor-pointer"
               onClick={handleContactClick}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               animate={{
                 scale: isHovered ? 1.05 : 1,
-                transition: { duration: 0.2 }
+                transition: { duration: 0.2 },
               }}
             >
-              <motion.span 
+              <motion.span
                 animate={{
                   x: isHovered ? [0, 5, -5, 5, 0] : 0,
                 }}
                 transition={{
                   duration: 0.5,
                   repeat: isHovered ? Infinity : 0,
-                  repeatType: 'reverse'
+                  repeatType: "reverse",
                 }}
               >
                 <FiMessageSquare className="icon" />
