@@ -100,7 +100,6 @@ const Home = () => {
   const isInView = useInView(ref, { once: true, amount: 0.2 });
   const { theme } = useTheme();
   const navigate = useNavigate();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
@@ -211,15 +210,6 @@ const Home = () => {
           ))}
         </div>
 
-        {/* Mouse Cursor Trail */}
-        <motion.div
-          className="cursor-trail"
-          animate={{
-            x: mousePosition.x - 10,
-            y: mousePosition.y - 10,
-          }}
-          transition={{ type: "spring", stiffness: 500, damping: 28 }}
-        />
 
         <div className="content-container">
           <motion.div
