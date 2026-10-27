@@ -229,13 +229,29 @@
   outline-offset: 2px;
 }
 
-/* GitHub Link Styles */
+/* ==========================================================================
+   GitHub Link — animated button
+   Hover: spinning gradient ring, gradient fill, cursor spotlight, sheen sweep,
+          icon wiggle, "GitHub" rolls into "Visit ↗".
+   Click: ripple, icon spin-pop and spark burst (spark/ripple elements are
+          rendered by Header.jsx; lift and press-down are driven by framer-motion).
+   ========================================================================== */
+
+/* Registered so the conic-gradient angle can be animated (ring spin) */
+@property --gh-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .github-container {
   display: flex;
   align-items: center;
 }
 
 .github-link {
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -247,32 +263,318 @@
   border: 1px solid var(--border-color);
   font-weight: 500;
   font-size: 0.95rem;
-  transition: all 0.3s ease;
+  cursor: pointer;
   box-shadow: var(--shadow-dark);
   backdrop-filter: blur(10px);
+  -webkit-tap-highlight-color: transparent;
+  /* No transform here on purpose: framer-motion handles lift and press */
+  transition: color 0.3s ease, border-color 0.3s ease, box-shadow 0.4s ease;
 }
 
-.github-link:hover {
-  background: var(--primary-color);
-  color: white;
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-  border-color: var(--primary-color);
+/* Rotating gradient ring around the button */
+.github-link::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  padding: 2px;
+  border-radius: 14px;
+  background: conic-gradient(
+    from var(--gh-angle),
+    var(--primary-color),
+    var(--accent-color),
+    #a78bfa,
+    #f472b6,
+    #f59e0b,
+    var(--primary-color)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  animation: github-ring-spin 2.4s linear infinite;
+  animation-play-state: paused;
+}
+
+.github-link:hover,
+.github-link:focus-visible {
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 10px 30px -6px rgba(37, 99, 235, 0.55),
+    0 0 22px rgba(6, 182, 212, 0.35);
+}
+
+.github-link:hover::before,
+.github-link:focus-visible::before {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.github-link:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 5px;
+}
+
+/* Clipped layer that holds the fill, spotlight, sheen and click ripples */
+.github-fx {
+  position: absolute;
+  inset: 0;
+  border-radius: 11px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Gradient fill that grows from the centre */
+.github-fx::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    var(--primary-color),
+    var(--accent-color)
+  );
+  opacity: 0;
+  transform: scale(0.55);
+  transition: opacity 0.35s ease, transform 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* Soft spotlight that follows the cursor (--mx / --my set in Header.jsx) */
+.github-fx::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    90px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.38),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.github-link:hover .github-fx::before,
+.github-link:focus-visible .github-fx::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.github-link:hover .github-fx::after,
+.github-link:focus-visible .github-fx::after {
+  opacity: 1;
+}
+
+/* Diagonal light streak that sweeps across on hover */
+.github-sheen {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgba(255, 255, 255, 0.55),
+    transparent
+  );
+  transform: translateX(-150%) skewX(-20deg);
+  opacity: 0;
+}
+
+.github-link:hover .github-sheen,
+.github-link:focus-visible .github-sheen {
+  animation: github-sheen 0.8s ease-out;
+}
+
+/* Click ripple */
+.github-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0.28) 40%,
+    transparent 70%
+  );
+  transform: scale(0);
+  opacity: 1;
+  pointer-events: none;
+  animation: github-ripple 0.75s ease-out forwards;
+}
+
+/* Icon */
+.github-icon-slot {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.github-icon-wrap {
+  display: inline-flex;
 }
 
 .github-icon {
   font-size: 1.25rem;
   color: inherit;
-  transition: transform 0.3s ease;
 }
 
-.github-link:hover .github-icon {
-  transform: scale(1.1) translateY(-1px);
+.github-link:hover .github-icon,
+.github-link:focus-visible .github-icon {
+  animation: github-wiggle 0.8s ease-in-out forwards;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.65));
 }
 
+/* Click sparks (positioned from the icon centre; motion handled by framer-motion) */
+.github-spark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Text roll: "GitHub" slides up and "Visit ↗" takes its place.
+   Both lines share one grid cell so the button width never changes. */
 .github-text {
   position: relative;
   top: 1px;
+  z-index: 1;
+  display: inline-grid;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.github-text-line {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  transition: transform 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.3s ease;
+}
+
+.github-text-line--alt {
+  transform: translateY(110%);
+  opacity: 0;
+}
+
+.github-link:hover .github-text-line:first-child,
+.github-link:focus-visible .github-text-line:first-child {
+  transform: translateY(-110%);
+  opacity: 0;
+}
+
+.github-link:hover .github-text-line--alt,
+.github-link:focus-visible .github-text-line--alt {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.github-arrow {
+  font-size: 1em;
+}
+
+.github-link:hover .github-arrow,
+.github-link:focus-visible .github-arrow {
+  animation: github-arrow-nudge 1s ease-in-out infinite;
+}
+
+@keyframes github-ring-spin {
+  from {
+    --gh-angle: 0deg;
+  }
+  to {
+    --gh-angle: 360deg;
+  }
+}
+
+@keyframes github-sheen {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(450%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes github-wiggle {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  20% {
+    transform: rotate(-18deg) scale(1.22);
+  }
+  40% {
+    transform: rotate(14deg) scale(1.22);
+  }
+  60% {
+    transform: rotate(-9deg) scale(1.15);
+  }
+  80% {
+    transform: rotate(4deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(0deg) scale(1.1);
+  }
+}
+
+@keyframes github-ripple {
+  from {
+    transform: scale(0);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes github-arrow-nudge {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(2px, -2px);
+  }
+}
+
+/* Respect "reduce motion" system setting */
+@media (prefers-reduced-motion: reduce) {
+  .github-link::before,
+  .github-sheen,
+  .github-ripple,
+  .github-arrow,
+  .github-link:hover .github-icon,
+  .github-link:focus-visible .github-icon {
+    animation: none !important;
+  }
+
+  .github-fx::before {
+    transform: none;
+  }
+
+  .github-text-line {
+    transition: opacity 0.2s ease;
+  }
 }
 
 /* Menu Toggle Button */
@@ -468,37 +770,14 @@
   margin-top: 0.5rem;
 }
 
+/* Mobile GitHub button: same animated .github-link, just full-width and centred */
 .mobile-github {
-  display: inline-flex;
-  align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  color: var(--text-color);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 0.75rem 1.5rem;
-  border-radius: 12px;
-  background: var(--hover-bg);
-  border: 1px solid var(--border-color);
   width: 100%;
   max-width: 200px;
-  transition: all 0.3s ease;
+  padding: 0.75rem 1.5rem;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     sans-serif;
-  backdrop-filter: blur(10px);
-}
-
-.mobile-github:hover,
-.mobile-github:focus {
-  background: var(--primary-color);
-  color: white;
-  transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
-  border-color: var(--primary-color);
-}
-
-.mobile-github .github-icon {
-  font-size: 1.25rem;
 }
 
 /* Dark mode styles */

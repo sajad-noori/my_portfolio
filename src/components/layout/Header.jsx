@@ -1,9 +1,155 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-import { FiGithub, FiMenu, FiX, FiSun, FiMoon } from "react-icons/fi";
+import { motion, useAnimation, useReducedMotion } from "framer-motion";
+import {
+  FiGithub,
+  FiMenu,
+  FiX,
+  FiSun,
+  FiMoon,
+  FiArrowUpRight,
+} from "react-icons/fi";
 import { useTheme } from "../../hooks/useTheme";
 import "../../styles/Header.css";
+
+const GITHUB_URL = "https://github.com/sajad-noori";
+
+const SPARK_COUNT = 10;
+const SPARK_COLORS = [
+  "var(--primary-color)",
+  "var(--accent-color)",
+  "#f59e0b",
+  "#ec4899",
+];
+const EFFECT_LIFETIME = 900; // ms before a click effect is removed from the DOM
+
+/**
+ * Animated GitHub button.
+ *
+ * Hover:  spinning gradient ring, gradient fill that grows from the centre,
+ *         cursor-following spotlight, light sheen sweep, icon wiggle,
+ *         "GitHub" rolls up into "Visit ↗".
+ * Click:  press-down squish, ripple from the click point, icon spin-pop,
+ *         and a burst of colourful sparks.
+ */
+const GitHubLink = ({ variant = "desktop", onActivate }) => {
+  const [effects, setEffects] = useState([]);
+  const iconControls = useAnimation();
+  const prefersReducedMotion = useReducedMotion();
+  const timeouts = useRef([]);
+
+  // Clear any pending cleanup timers on unmount
+  useEffect(() => {
+    const pending = timeouts.current;
+    return () => pending.forEach(clearTimeout);
+  }, []);
+
+  // Feed the cursor position to CSS so the spotlight can follow it
+  const handleMouseMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.style.setProperty("--mx", `${event.clientX - rect.left}px`);
+    event.currentTarget.style.setProperty("--my", `${event.clientY - rect.top}px`);
+  };
+
+  const handleClick = (event) => {
+    if (!prefersReducedMotion) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height) * 2.2;
+      // event.detail === 0 means the click came from the keyboard,
+      // so start the ripple from the centre instead of (0, 0)
+      const fromKeyboard = event.detail === 0;
+      const x = fromKeyboard ? rect.width / 2 : event.clientX - rect.left;
+      const y = fromKeyboard ? rect.height / 2 : event.clientY - rect.top;
+      const id = `${Date.now()}-${Math.random()}`;
+
+      setEffects((prev) => [...prev, { id, x, y, size }]);
+      timeouts.current.push(
+        setTimeout(() => {
+          setEffects((prev) => prev.filter((fx) => fx.id !== id));
+        }, EFFECT_LIFETIME)
+      );
+
+      iconControls.start({
+        rotate: [0, 360],
+        scale: [1, 1.45, 1],
+        transition: { duration: 0.7, ease: "easeInOut" },
+      });
+    }
+
+    if (onActivate) onActivate();
+  };
+
+  return (
+    <motion.a
+      href={GITHUB_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`github-link${variant === "mobile" ? " mobile-github" : ""}`}
+      aria-label="GitHub Profile"
+      onMouseMove={handleMouseMove}
+      onClick={handleClick}
+      whileHover={prefersReducedMotion ? undefined : { y: -3, scale: 1.04 }}
+      whileTap={prefersReducedMotion ? undefined : { scale: 0.93 }}
+      transition={{ type: "spring", stiffness: 420, damping: 18 }}
+    >
+      {/* Background effects (clipped to the pill shape) */}
+      <span className="github-fx" aria-hidden="true">
+        <span className="github-sheen" />
+        {effects.map((fx) => (
+          <span
+            key={fx.id}
+            className="github-ripple"
+            style={{
+              width: fx.size,
+              height: fx.size,
+              left: fx.x - fx.size / 2,
+              top: fx.y - fx.size / 2,
+            }}
+          />
+        ))}
+      </span>
+
+      {/* Icon + spark burst */}
+      <span className="github-icon-slot">
+        <motion.span className="github-icon-wrap" animate={iconControls}>
+          <FiGithub className="github-icon" />
+        </motion.span>
+
+        {effects.map((fx) =>
+          Array.from({ length: SPARK_COUNT }, (_, i) => {
+            const angle = (i / SPARK_COUNT) * Math.PI * 2;
+            const distance = 28 + (i % 3) * 10;
+            const color = SPARK_COLORS[i % SPARK_COLORS.length];
+            return (
+              <motion.span
+                key={`${fx.id}-${i}`}
+                className="github-spark"
+                style={{ background: color, color }}
+                initial={{ x: 0, y: 0, scale: 1, opacity: 1 }}
+                animate={{
+                  x: Math.cos(angle) * distance,
+                  y: Math.sin(angle) * distance,
+                  scale: 0,
+                  opacity: 0,
+                }}
+                transition={{ duration: 0.7, ease: "easeOut" }}
+              />
+            );
+          })
+        )}
+      </span>
+
+      {/* Text that rolls from "GitHub" to "Visit ↗" on hover */}
+      <span className="github-text">
+        <span className="github-text-line">GitHub</span>
+        <span className="github-text-line github-text-line--alt" aria-hidden="true">
+          Visit
+          <FiArrowUpRight className="github-arrow" />
+        </span>
+      </span>
+    </motion.a>
+  );
+};
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -102,16 +248,7 @@ const Header = () => {
             >
               {theme === "light" ? <FiMoon size={20} /> : <FiSun size={20} />}
             </button>
-            <a
-              href="https://github.com/sajad-noori"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="github-link"
-              aria-label="GitHub Profile"
-            >
-              <FiGithub className="github-icon" />
-              <span className="github-text">GitHub</span>
-            </a>
+            <GitHubLink />
           </div>
         </div>
 
@@ -210,17 +347,11 @@ const Header = () => {
           </ul>
 
           <div className="mobile-social">
-            <a
-              href="https://github.com/yourusername"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mobile-github"
-              aria-label="GitHub Profile"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <FiGithub className="github-icon" />
-              <span>GitHub</span>
-            </a>
+            {/* Close the menu after the click animation has had time to play */}
+            <GitHubLink
+              variant="mobile"
+              onActivate={() => setTimeout(() => setIsMenuOpen(false), 800)}
+            />
           </div>
         </div>
       </nav>
