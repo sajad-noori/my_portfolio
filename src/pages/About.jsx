@@ -6,18 +6,20 @@ import {
   FaLaptopCode,
   FaDatabase,
   FaTools,
+  FaArrowRight,
+  FaRegLightbulb,
+  FaGraduationCap,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useTheme } from "../hooks/useTheme";
 import "../styles/About.css";
 
-// Animation variants
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6 },
+    transition: { duration: 0.55, ease: "easeOut" },
   },
 };
 
@@ -25,47 +27,18 @@ const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-// Enhanced skills container animation with theme awareness
-const skillsContainerVariants = {
-  hidden: {
-    opacity: 0,
-    y: 50,
-    scale: 0.95,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: "easeOut",
-      staggerChildren: 0.1,
-    },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
 const About = () => {
   const { theme } = useTheme();
+
   const skills = [
     {
       name: "Frontend Development",
       icon: <FaLaptopCode />,
-      items: [
-        "React",
-        "Next.js",
-        "TypeScript",
-        "JavaScript",
-        "HTML5",
-        "CSS3",
-        "Tailwind CSS",
-        "Bootstrap",
-      ],
+      items: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "Bootstrap"],
     },
     {
       name: "Backend Development",
@@ -73,253 +46,296 @@ const About = () => {
       items: ["Node.js", "Express.js", "REST APIs", "JWT Authentication"],
     },
     {
-      name: "Database",
+      name: "Databases",
       icon: <FaDatabase />,
       items: ["MySQL", "MongoDB"],
     },
     {
-      name: "Tools & Version Control",
+      name: "Tools & Workflow",
       icon: <FaTools />,
-      items: ["Git", "GitHub", "Vite", "Webpack"],
+      items: ["Git", "GitHub", "Vite", "Webpack", "API Integration"],
     },
   ];
 
   const experiences = [
     {
-      role: "Full Stack Developer (Personal Projects)",
-      company: "Self-driven & Freelance",
-      period: "2023 - Present",
+      role: "Full Stack Developer — Personal Projects",
+      company: "Independent Projects",
+      period: "2023 – Present",
       description:
-        "Building full-stack applications using React, Next.js, Node.js, and MySQL. Developed a news management system with image uploads, authentication with JWT, and video player features (likes, comments, views).",
+        "Building full-stack applications with React, Next.js, Node.js, and MySQL. Project work includes content management, image uploads, JWT authentication, and interactive user features.",
     },
     {
-      role: "Frontend Developer (Learning & Building)",
+      role: "Frontend Developer — Learning & Building",
       company: "Portfolio & Practice Projects",
-      period: "2022 - 2023",
+      period: "2022 – 2023",
       description:
-        "Created responsive and modern web applications with React and Material UI. Learned authentication systems, CRUD operations, and API integration while working on real-world inspired projects.",
+        "Created responsive web interfaces with React and Material UI, practicing CRUD workflows, authentication, reusable components, and API integration.",
     },
     {
-      role: "Networking Enthusiast",
-      company: "Self-learning (CCNA)",
+      role: "Networking Fundamentals",
+      company: "Independent Learning",
       period: "Ongoing",
       description:
-        "Studying networking fundamentals (CCNA) to strengthen my understanding of infrastructure and backend communication systems.",
+        "Studying networking fundamentals and CCNA topics to strengthen my understanding of networks and how web applications communicate.",
     },
   ];
 
   const services = [
     {
-      title: "Web Development",
+      title: "Frontend Development",
       icon: <FaCode />,
       description:
-        "Creating responsive, modern, and user-friendly web applications using React.js, Next.js, and TypeScript.",
+        "Responsive, accessible interfaces built with React, Next.js, and modern JavaScript.",
     },
     {
-      title: "Backend Development",
+      title: "Backend & APIs",
       icon: <FaServer />,
       description:
-        "Designing and implementing secure, scalable APIs with Node.js, Express, and MySQL or MongoDB.",
+        "Practical REST APIs and server-side features using Node.js, Express, and databases.",
     },
     {
-      title: "UI/UX & Responsive Design",
+      title: "Responsive UI",
       icon: <FaMobileAlt />,
       description:
-        "Building clean and interactive user interfaces with a mobile-first approach using Tailwind CSS and Bootstrap.",
+        "Clean layouts that adapt smoothly to mobile, tablet, and desktop screens.",
     },
   ];
 
   return (
     <motion.section
-      className={`about-section ${
-        theme === "dark" ? "theme-dark" : "theme-light"
-      }`}
+      className={`about-section ${theme === "dark" ? "theme-dark" : "theme-light"}`}
       data-theme={theme}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      {/* Background Blobs */}
-      <div className="background-blobs">
-        <div className="blob blob-1"></div>
-        <div className="blob blob-2"></div>
+      <div className="about-background" aria-hidden="true">
+        <span className="about-orb about-orb-one" />
+        <span className="about-orb about-orb-two" />
+        <span className="about-grid-pattern" />
       </div>
-      <div className="container">
-        {/* About Me */}
-        <motion.div
-          className="about-me"
+
+      <div className="about-container">
+        {/* Intro / profile hero */}
+        <motion.header
+          className="about-hero"
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+        >
+          <motion.div className="about-hero-copy" variants={fadeInUp}>
+            <span className="about-eyebrow">
+              <span className="eyebrow-dot" />
+              A little about me
+            </span>
+            <h1>
+              Building useful digital
+              <span className="gradient-text"> experiences.</span>
+            </h1>
+            <p className="about-lead">
+              I’m <strong>Sajad Noori</strong>, a web developer focused on
+              creating modern, responsive, and user-friendly applications. I
+              enjoy turning ideas into reliable products through thoughtful UI,
+              clean code, and practical problem-solving.
+            </p>
+
+            <div className="about-hero-actions">
+              <a className="about-primary-link" href="/projects">
+                Explore my work <FaArrowRight aria-hidden="true" />
+              </a>
+              <a className="about-secondary-link" href="/contact">
+                Let’s connect
+              </a>
+            </div>
+
+            <div className="about-quick-facts">
+              <div className="quick-fact">
+                <span className="quick-fact-icon"><FaCode /></span>
+                <span><strong>Web development</strong><small>Frontend + backend</small></span>
+              </div>
+              <div className="quick-fact">
+                <span className="quick-fact-icon"><FaRegLightbulb /></span>
+                <span><strong>Always learning</strong><small>Curious by nature</small></span>
+              </div>
+            </div>
+          </motion.div>
+
+          <motion.div className="about-hero-visual" variants={fadeInUp}>
+            <div className="profile-photo-frame">
+              <div className="profile-photo-accent" />
+              <img
+                src="/sajad-profile.jpg"
+                alt="Sajad Noori outdoors"
+                className="profile-image"
+                fetchPriority="high"
+              />
+              <div className="profile-photo-caption">
+                <span className="caption-status" />
+                <span><strong>Sajad Noori</strong><small>Web Developer</small></span>
+              </div>
+            </div>
+            <div className="floating-code-card" aria-hidden="true">
+              <span className="code-card-dots"><i /><i /><i /></span>
+              <code><span>const</span> developer = {"{"}<br />&nbsp; passion: <b>"building"</b>,<br />&nbsp; mindset: <b>"growth"</b><br />{"}"};</code>
+            </div>
+            <div className="floating-tech-chip">React · Node.js · MySQL</div>
+          </motion.div>
+        </motion.header>
+
+        {/* Story */}
+        <motion.section
+          className="about-story section-block"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.2 }}
           variants={fadeInUp}
         >
-          <h1 className="section-title">About Me</h1>
-          <p className="section-subtitle">
-            I'm Sajad Noori, a dedicated Full Stack Developer passionate about
-            building modern, efficient, and user-friendly web applications. I
-            specialize in React.js, Next.js, Node.js, and MySQL, turning ideas
-            into seamless and scalable digital experiences.
-          </p>
-
-          <div className="about-content">
-            <div className="about-text">
-              <h3>Who I Am</h3>
+          <div className="section-heading">
+            <span className="section-kicker">MY STORY</span>
+            <h2>Curiosity turned into <span className="gradient-text">craft.</span></h2>
+            <p>How I approach development, learning, and solving problems.</p>
+          </div>
+          <div className="story-card">
+            <div className="story-icon"><FaGraduationCap /></div>
+            <div className="story-copy">
+              <h3>Who I am</h3>
               <p>
-                I'm a self-motivated developer who enjoys turning complex
-                challenges into simple, beautiful, and effective solutions. With
-                strong skills in both frontend and backend development, I focus
-                on writing clean, efficient, and maintainable code.
+                I’m a self-motivated developer who likes breaking complex
+                challenges into clear, manageable solutions. My work spans
+                frontend interfaces and backend functionality, with an emphasis
+                on maintainable code and a smooth user experience.
               </p>
               <p>
-                My journey started with curiosity about technology, which grew
-                into a deep passion for creating web solutions. Over time, I’ve
-                built full-stack projects, experimented with authentication,
-                file uploads, and user dashboards, while always striving to
-                learn more and improve my craft.
+                Through personal and practical projects, I’ve explored
+                authentication, file uploads, dashboards, database operations,
+                and API integration. I keep improving by building, testing,
+                learning from mistakes, and exploring tools that make my work
+                better.
               </p>
               <p>
-                Outside of coding, I enjoy learning networking concepts (CCNA)
-                and exploring new tools that expand my knowledge as a developer.
+                I’m also learning networking fundamentals, including CCNA
+                topics, to broaden my understanding of the systems behind web
+                applications.
               </p>
-            </div>
-            <div className="about-image">
-              <motion.div
-                className="profile-image-container"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <img
-                  src="/profile.jpeg"
-                  alt="Sajad Noori"
-                  className="profile-image"
-                />
-              </motion.div>
             </div>
           </div>
-        </motion.div>
+        </motion.section>
 
         {/* Skills */}
-        <motion.div
-          className={`skills-container ${
-            theme === "dark" ? "skills-dark" : "skills-light"
-          }`}
+        <motion.section
+          className="skills-container section-block"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={skillsContainerVariants}
-          whileHover={{
-            scale: 1.02,
-            transition: { duration: 0.3 },
-          }}
+          viewport={{ once: true, amount: 0.15 }}
+          variants={staggerContainer}
         >
-          <motion.h2
-            className="section-title"
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            My Skills
-          </motion.h2>
-          <motion.p
-            className="section-subtitle"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            These are the tools and technologies I use to bring ideas to life:
-          </motion.p>
-
-          <motion.div
-            className="skills-grid"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-          >
-            {skills.map((category, index) => (
-              <motion.div
-                key={index}
+          <div className="section-heading">
+            <span className="section-kicker">MY TOOLKIT</span>
+            <h2>Skills & <span className="gradient-text">technologies</span></h2>
+            <p>The tools I use to design, build, and improve web applications.</p>
+          </div>
+          <div className="skills-grid">
+            {skills.map((category) => (
+              <motion.article
+                key={category.name}
                 className="skill-category"
                 variants={fadeInUp}
+                whileHover={{ y: -5 }}
               >
-                <h4>
-                  {category.icon} {category.name}
-                </h4>
+                <div className="skill-card-heading">
+                  <span className="skill-category-icon">{category.icon}</span>
+                  <h3>{category.name}</h3>
+                </div>
                 <div className="skill-list">
-                  {category.items.map((skill, i) => (
-                    <span key={i} className="skill-tag">
-                      {skill}
-                    </span>
+                  {category.items.map((skill) => (
+                    <span key={skill} className="skill-tag">{skill}</span>
                   ))}
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+        </motion.section>
 
         {/* Experience */}
-        <motion.div
-          className="experience-container"
+        <motion.section
+          className="experience-container section-block"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.15 }}
           variants={fadeInUp}
         >
-          <h2 className="section-title">Experience</h2>
-          <p className="section-subtitle">
-            My journey as a developer and what I’ve worked on so far.
-          </p>
-
+          <div className="section-heading">
+            <span className="section-kicker">THE JOURNEY</span>
+            <h2>Learning by <span className="gradient-text">building.</span></h2>
+            <p>A snapshot of my development journey and ongoing learning.</p>
+          </div>
           <div className="timeline">
             {experiences.map((exp, index) => (
-              <motion.div
-                key={index}
+              <motion.article
+                key={exp.role}
                 className="timeline-item"
                 variants={fadeInUp}
               >
-                <div className="timeline-dot"></div>
+                <div className="timeline-marker"><span>{String(index + 1).padStart(2, "0")}</span></div>
                 <div className="timeline-content">
-                  <h4>{exp.role}</h4>
-                  <span className="timeline-company">{exp.company}</span>
-                  <span className="timeline-period">{exp.period}</span>
+                  <div className="timeline-topline">
+                    <span className="timeline-company">{exp.company}</span>
+                    <span className="timeline-period">{exp.period}</span>
+                  </div>
+                  <h3>{exp.role}</h3>
                   <p className="timeline-description">{exp.description}</p>
                 </div>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
-        </motion.div>
+        </motion.section>
 
         {/* Services */}
-        <motion.div
-          className="services-container"
+        <motion.section
+          className="services-container section-block"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeInUp}
+          viewport={{ once: true, amount: 0.15 }}
+          variants={staggerContainer}
         >
-          <h2 className="section-title">What I Do</h2>
-          <p className="section-subtitle">
-            Here are the services I can provide.
-          </p>
-
+          <div className="section-heading">
+            <span className="section-kicker">WHAT I CAN DO</span>
+            <h2>Turning ideas into <span className="gradient-text">products.</span></h2>
+            <p>Practical development support from interface to API.</p>
+          </div>
           <div className="services-grid">
-            {services.map((service, index) => (
-              <motion.div
-                key={index}
+            {services.map((service) => (
+              <motion.article
+                key={service.title}
                 className="service-card"
                 variants={fadeInUp}
-                whileHover={{ y: -10 }}
+                whileHover={{ y: -6 }}
               >
                 <div className="service-icon">{service.icon}</div>
-                <h4>{service.title}</h4>
+                <h3>{service.title}</h3>
                 <p>{service.description}</p>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
-        </motion.div>
+        </motion.section>
+
+        <motion.footer
+          className="about-cta"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeInUp}
+        >
+          <div>
+            <span className="section-kicker">HAVE A PROJECT IN MIND?</span>
+            <h2>Let’s build something <span className="gradient-text">meaningful.</span></h2>
+            <p>I’m always open to discussing web projects, collaboration, and new ideas.</p>
+          </div>
+          <a className="about-primary-link" href="/contact">
+            Contact me <FaArrowRight aria-hidden="true" />
+          </a>
+        </motion.footer>
       </div>
     </motion.section>
   );
