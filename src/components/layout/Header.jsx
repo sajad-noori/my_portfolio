@@ -5,10 +5,9 @@ import {
   FiGithub,
   FiMenu,
   FiX,
-  FiSun,
-  FiMoon,
   FiArrowUpRight,
 } from "react-icons/fi";
+import AnimatedThemeToggle from "./AnimatedThemeToggle";
 import { useTheme } from "../../hooks/useTheme";
 import "../../styles/Header.css";
 
@@ -236,18 +235,7 @@ const Header = () => {
 
         <div className="github-container">
           <div className="header-actions">
-            <button
-              className="theme-toggle"
-              onClick={toggleTheme}
-              aria-label={
-                theme === "light" ? "Activate dark mode" : "Activate light mode"
-              }
-              title={
-                theme === "light" ? "Activate dark mode" : "Activate light mode"
-              }
-            >
-              {theme === "light" ? <FiMoon size={20} /> : <FiSun size={20} />}
-            </button>
+            <AnimatedThemeToggle />
             <GitHubLink />
           </div>
         </div>
@@ -316,34 +304,11 @@ const Header = () => {
               </NavLink>
             </li>
             <li className="mobile-theme-toggle">
-              <button
-                onClick={() => {
-                  toggleTheme();
-                  setIsMenuOpen(false);
-                }}
-                className="theme-toggle"
-                aria-label={
-                  theme === "light"
-                    ? "Activate dark mode"
-                    : "Activate light mode"
-                }
-                title={
-                  theme === "light"
-                    ? "Activate dark mode"
-                    : "Activate light mode"
-                }
-              >
-                {theme === "light" ? (
-                  <>
-                    <FiMoon /> Dark Mode
-                  </>
-                ) : (
-                  <>
-                    <FiSun /> Light Mode
-                  </>
-                )}
-              </button>
-            </li>
+  <AnimatedThemeToggle
+    variant="mobile"
+    onToggle={() => setIsMenuOpen(false)}
+  />
+</li>
           </ul>
 
           <div className="mobile-social">
