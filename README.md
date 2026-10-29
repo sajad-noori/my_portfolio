@@ -1,143 +1,225 @@
+<!-- ═══════════════════════════ HEADER ═══════════════════════════ -->
 <div align="center">
 
-# ✨ Sajad Noori — Portfolio
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,20,24&height=230&section=header&text=Sajad%20Noori&fontSize=64&fontColor=ffffff&fontAlignY=36&animation=fadeIn&desc=Personal%20Portfolio&descSize=22&descAlignY=58" alt="Sajad Noori Portfolio banner" width="100%" />
 
-**A fast, animated personal portfolio built with React 19, Vite and Framer Motion.**
+<a href="https://my-portfolio-one-eosin-25.vercel.app">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3200&pause=900&color=A78BFA&center=true&vCenter=true&width=620&lines=Welcome+to+my+portfolio+%F0%9F%91%8B;Built+with+React+19+%2B+Vite+7;Animated+with+Framer+Motion;Deployed+on+Vercel+%E2%9A%A1" alt="Typing animation" />
+</a>
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-6366f1?style=for-the-badge&logo=vercel&logoColor=white)](https://my-portfolio-one-eosin-25.vercel.app)
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+<br/>
+
+[![Live Demo](https://img.shields.io/badge/%E2%9C%A8%20LIVE%20DEMO-Visit%20the%20site-8b5cf6?style=for-the-badge&labelColor=1e1b4b)](https://my-portfolio-one-eosin-25.vercel.app)
+[![GitHub](https://img.shields.io/badge/GitHub-sajad--noori-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sajad-noori)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+
+<br/>
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=flat-square&logo=vite&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white)
 ![MUI](https://img.shields.io/badge/MUI-7-007FFF?style=flat-square&logo=mui&logoColor=white)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-12-0055FF?style=flat-square&logo=framer&logoColor=white)
-
-[**🌐 Live Site**](https://my-portfolio-one-eosin-25.vercel.app) ·
-[**🐛 Report a Bug**](https://github.com/sajad-noori/my_portfolio/issues) ·
-[**💡 Request a Feature**](https://github.com/sajad-noori/my_portfolio/issues)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-12-FF0055?style=flat-square&logo=framer&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-9-4B32C3?style=flat-square&logo=eslint&logoColor=white)
 
 </div>
 
----
+<!-- ═══════════════════════════ NAV ═══════════════════════════ -->
+<p align="center">
+  <a href="#-about">About</a> &nbsp;•&nbsp;
+  <a href="#-features">Features</a> &nbsp;•&nbsp;
+  <a href="#-tech-stack">Tech Stack</a> &nbsp;•&nbsp;
+  <a href="#-getting-started">Getting Started</a> &nbsp;•&nbsp;
+  <a href="#-deployment">Deployment</a> &nbsp;•&nbsp;
+  <a href="#-contact">Contact</a>
+</p>
 
-## 📖 About
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="divider" />
 
-This is my personal portfolio: a single place to showcase who I am, the projects I've built, and how to get in touch. It's a single-page application with client-side routing, smooth animations, and a build pipeline tuned for performance (compression, image optimization, and bundle analysis).
+## 🌟 About
 
-> 📸 **Tip:** add a screenshot or GIF of the site at `public/preview.png` and uncomment the line below.
+> *A fast, animated, single-page portfolio that shows who I am, what I've built, and how to reach me.*
 
-<!-- ![Portfolio preview](public/preview.png) -->
+This site is built as a React single-page application with client-side routing, smooth motion, and a build pipeline tuned for performance: compression, image optimization, and bundle analysis.
+
+<!-- 📸 Add a screenshot or GIF at public/preview.png, then uncomment: -->
+<!-- <p align="center"><img src="public/preview.png" alt="Portfolio preview" width="90%" /></p> -->
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="divider" />
 
 ## 🚀 Features
 
-- ⚡ **Fast by default**: Vite 7 dev server and optimized production builds
-- 🎞️ **Smooth animations**: page and element transitions powered by Framer Motion
-- 🧭 **Client-side routing**: React Router 7 for instant navigation
-- 🎨 **Modern UI**: Tailwind CSS 4 utilities combined with Material UI components
-- 🖼️ **Optimized assets**: automatic image optimization and gzip/brotli compression at build time
-- 📦 **Bundle insight**: `rollup-plugin-visualizer` to keep the bundle lean
-- ☁️ **One-click deploys**: configured for Vercel (`vercel.json`)
+<table>
+  <tr>
+    <td width="50%" valign="top">
+
+**⚡ Lightning fast**<br/>
+Vite 7 dev server with instant HMR and optimized production builds.
+
+</td>
+    <td width="50%" valign="top">
+
+**🎞️ Fluid animations**<br/>
+Page and element transitions powered by Framer Motion.
+
+</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+
+**🧭 Seamless navigation**<br/>
+Client-side routing with React Router 7, no full page reloads.
+
+</td>
+    <td width="50%" valign="top">
+
+**🎨 Modern UI**<br/>
+Tailwind CSS 4 utilities combined with Material UI components.
+
+</td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+
+**🖼️ Optimized assets**<br/>
+Automatic image optimization and build-time compression.
+
+</td>
+    <td width="50%" valign="top">
+
+**📦 Bundle insight**<br/>
+`rollup-plugin-visualizer` keeps the bundle size in check.
+
+</td>
+  </tr>
+</table>
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="divider" />
 
 ## 🛠️ Tech Stack
 
-| Area | Tools |
-| --- | --- |
-| **Framework** | React 19, React Router 7 |
-| **Build tool** | Vite 7 |
-| **Styling** | Tailwind CSS 4, Material UI 7, Emotion |
-| **Animation** | Framer Motion |
-| **Icons** | Lucide React, React Icons, MUI Icons |
-| **Optimization** | vite-plugin-compression, vite-plugin-image-optimizer, rollup-plugin-visualizer |
-| **Quality** | ESLint 9 (react-hooks, react-refresh) |
-| **Hosting** | Vercel |
+<div align="center">
+
+<img src="https://skillicons.dev/icons?i=react,vite,tailwind,materialui,js,html,css,vercel,git,vscode,npm,eslint&perline=12" alt="Tech stack icons" />
+
+</div>
+
+<br/>
+
+| Layer | Technologies |
+| :-- | :-- |
+| 🧱 **Framework** | React 19 · React Router 7 |
+| ⚙️ **Build tool** | Vite 7 |
+| 🎨 **Styling** | Tailwind CSS 4 · Material UI 7 · Emotion |
+| 🎞️ **Animation** | Framer Motion |
+| 🔣 **Icons** | Lucide React · React Icons · MUI Icons |
+| 🚄 **Optimization** | vite-plugin-compression · vite-plugin-image-optimizer · rollup-plugin-visualizer |
+| 🧹 **Code quality** | ESLint 9 (react-hooks, react-refresh) |
+| ☁️ **Hosting** | Vercel |
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="divider" />
 
 ## 📂 Project Structure
 
 ```text
 my_portfolio/
-├── .vscode/            # Editor settings
-├── public/             # Static assets served as-is
-├── src/                # Application source (components, pages, styles)
-├── eslint.config.js    # ESLint flat config
-├── index.html          # App entry HTML
-├── vercel.json         # Vercel deployment config
-├── vite.config.js      # Vite + plugin configuration
-└── package.json
+├── 📁 .vscode/            Editor settings
+├── 📁 public/             Static assets served as-is
+├── 📁 src/                Application source (components, pages, styles)
+├── 📄 eslint.config.js    ESLint flat config
+├── 📄 index.html          App entry HTML
+├── 📄 vercel.json         Vercel deployment config
+├── 📄 vite.config.js      Vite + plugin configuration
+└── 📄 package.json        Dependencies and scripts
 ```
 
 ## ⚙️ Getting Started
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) 18 or newer (20+ recommended)
-- npm (comes with Node.js)
-
-### Installation
+**Prerequisites:** [Node.js](https://nodejs.org/) 18+ (20+ recommended) and npm.
 
 ```bash
-# 1. Clone the repository
+# 1️⃣  Clone the repository
 git clone https://github.com/sajad-noori/my_portfolio.git
 
-# 2. Move into the project
+# 2️⃣  Enter the project folder
 cd my_portfolio
 
-# 3. Install dependencies
+# 3️⃣  Install dependencies
 npm install
 
-# 4. Start the dev server
+# 4️⃣  Start the dev server  →  http://localhost:5173
 npm run dev
 ```
 
-The app will be available at **http://localhost:5173**.
+<details>
+<summary><b>📜 Available scripts</b></summary>
 
-### Available Scripts
+<br/>
 
-| Command | What it does |
-| --- | --- |
-| `npm run dev` | Starts the Vite dev server with hot reload |
-| `npm run build` | Creates an optimized production build in `dist/` |
-| `npm run preview` | Serves the production build locally |
-| `npm run lint` | Runs ESLint across the project |
+| Command | Description |
+| :-- | :-- |
+| `npm run dev` | Start the Vite dev server with hot reload |
+| `npm run build` | Create an optimized production build in `dist/` |
+| `npm run preview` | Serve the production build locally |
+| `npm run lint` | Run ESLint across the project |
+
+</details>
 
 ## ☁️ Deployment
 
-The site is deployed on **Vercel**. To deploy your own copy:
+This site is deployed on **Vercel**. To deploy your own copy:
 
-1. Fork this repository.
-2. Import it at [vercel.com/new](https://vercel.com/new).
-3. Vercel detects Vite automatically: build command `npm run build`, output directory `dist`.
-4. Click **Deploy**.
+1. 🍴 Fork this repository
+2. 📥 Import it at [vercel.com/new](https://vercel.com/new)
+3. 🔍 Vercel detects Vite automatically (build: `npm run build`, output: `dist`)
+4. 🚀 Click **Deploy**
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%" alt="divider" />
 
 ## 🗺️ Roadmap
 
-- [ ] Add project screenshots and case studies
-- [ ] Add a contact form
+- [x] React + Vite foundation
+- [x] Animations with Framer Motion
+- [x] Deployed on Vercel
+- [ ] Project screenshots and case studies
+- [ ] Contact form
 - [ ] Dark / light theme toggle
 - [ ] Multi-language support (including RTL)
 - [ ] Accessibility and Lighthouse audit pass
 
 ## 🤝 Contributing
 
-This is a personal project, but suggestions are welcome. Open an issue to discuss a change, or fork the repo and submit a pull request.
+This is a personal project, but ideas are welcome. Open an [issue](https://github.com/sajad-noori/my_portfolio/issues) to discuss a change, or fork the repo and send a pull request.
 
-## 📬 Contact
-
-- 🌐 Portfolio: [my-portfolio-one-eosin-25.vercel.app](https://my-portfolio-one-eosin-25.vercel.app)
-- 💻 GitHub: [@sajad-noori](https://github.com/sajad-noori)
-- 💼 LinkedIn: _add your link_
-- ✉️ Email: _add your email_
-
-## 📄 License
-
-Add a license file (for example [MIT](https://choosealicense.com/licenses/mit/)) and reference it here.
-
----
+## 📊 GitHub Stats
 
 <div align="center">
 
-Built with ❤️ by **Sajad Noori**
+<img height="170" src="https://github-readme-stats.vercel.app/api?username=sajad-noori&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0d1117" alt="GitHub stats" />
+<img height="170" src="https://github-readme-stats.vercel.app/api/top-langs/?username=sajad-noori&layout=compact&theme=tokyonight&hide_border=true&bg_color=0d1117" alt="Top languages" />
 
-⭐ If you like this project, consider giving it a star!
+</div>
+
+## 📬 Contact
+
+<div align="center">
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-Visit-8b5cf6?style=for-the-badge&logo=vercel&logoColor=white)](https://my-portfolio-one-eosin-25.vercel.app)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sajad-noori)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/YOUR-HANDLE)
+[![Email](https://img.shields.io/badge/Email-Say%20hello-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:YOUR-EMAIL@example.com)
+
+</div>
+
+## 📄 License
+
+Add a `LICENSE` file (for example [MIT](https://choosealicense.com/licenses/mit/)) and reference it here.
+
+<!-- ═══════════════════════════ FOOTER ═══════════════════════════ -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=12,14,20,24&height=120&section=footer" alt="footer" width="100%" />
+
+<div align="center">
+
+**Built with ❤️ by Sajad Noori** &nbsp;·&nbsp; ⭐ Star this repo if you like it!
 
 </div>
