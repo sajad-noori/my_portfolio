@@ -40,8 +40,7 @@ const InteractiveBadge = () => {
   const strapPath = useTransform(() => {
     const dx = x.get();
     const dy = y.get();
-    const pull = Math.max(-1, Math.min(1, dx / 135));
-    return `M 215 0 C ${170 + pull * 22} 48, ${260 + pull * 34} 82, ${215 + dx} ${148 + dy}`;
+    return `M 215 -12 C 215 38, ${215 + dx * 0.18} 91, ${215 + dx * 0.72} ${148 + dy}`;
   });
   const returnToRest = () => {
     animate(x, 0, { type: "spring", stiffness: 165, damping: 12, mass: 0.85 });
@@ -50,24 +49,12 @@ const InteractiveBadge = () => {
   return (
     <div className="lanyard-scene">
       <svg className="lanyard-svg" viewBox="0 0 430 560" aria-hidden="true">
-        <defs>
-          <linearGradient id="leather-strap" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stopColor="#3b2419" />
-            <stop offset="0.28" stopColor="#805236" />
-            <stop offset="0.52" stopColor="#b17b50" />
-            <stop offset="0.78" stopColor="#68412d" />
-            <stop offset="1" stopColor="#2e1c15" />
-          </linearGradient>
-          <linearGradient id="leather-edge" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#d5a477" stopOpacity=".85" />
-            <stop offset="1" stopColor="#3b2419" stopOpacity=".7" />
-          </linearGradient>
-        </defs>
-        <path d="M 215 -12 L 215 12" stroke="#9ca3af" strokeWidth="13" strokeLinecap="round" />
-        <path d="M 215 -12 L 215 12" stroke="#e5e7eb" strokeWidth="7" strokeLinecap="round" />
-        <motion.path d={strapPath} fill="none" stroke="#25170f" strokeWidth="24" strokeLinecap="round" />
-        <motion.path d={strapPath} fill="none" stroke="url(#leather-strap)" strokeWidth="19" strokeLinecap="round" />
-        <motion.path d={strapPath} fill="none" stroke="url(#leather-edge)" strokeWidth="1.3" strokeLinecap="round" strokeDasharray="2 5" />
+        <path d="M 215 -12 L 215 18" stroke="#171717" strokeWidth="22" strokeLinecap="round" />
+        <path d="M 215 -12 L 215 18" stroke="#4b3528" strokeWidth="17" strokeLinecap="round" />
+        <path d="M 207 -8 L 207 17 M 223 -8 L 223 17" stroke="#9a765c" strokeWidth="1" strokeDasharray="2 4" opacity=".8" />
+        <motion.path d={strapPath} fill="none" stroke="#171717" strokeWidth="22" strokeLinecap="round" />
+        <motion.path d={strapPath} fill="none" stroke="#4b3528" strokeWidth="17" strokeLinecap="round" />
+        <motion.path d={strapPath} fill="none" stroke="#a1846b" strokeWidth="1" strokeDasharray="2 5" opacity=".8" />
       </svg>
       <motion.div
         className="badge-holder"
@@ -81,27 +68,19 @@ const InteractiveBadge = () => {
         role="group"
         aria-label="Draggable photo ID badge. Drag it in any direction and release to watch it swing back."
       >
-        <div className="badge-clip">
-          <span className="badge-clip-hole" />
-          <span className="badge-clip-metal" />
-          <span className="badge-clip-jaw" />
+        <div className="badge-attachment" aria-hidden="true">
+          <span className="badge-attachment-eyelet" />
+          <span className="badge-attachment-hook" />
         </div>
         <div className="badge-card">
-          <div className="badge-card-top">
-            <span className="badge-brand-mark">SN</span>
-            <span className="badge-brand-label">PERSONAL ID</span>
-          </div>
-          <div className="badge-photo-wrap">
-            <img src="/sajad-profile.jpg" alt="Sajad Noori" className="badge-photo" draggable="false" fetchPriority="high" />
-          </div>
-          <div className="badge-card-info">
-            <strong>Sajad Noori</strong>
-            <span>WEB DEVELOPER</span>
-          </div>
-          <div className="badge-card-footer">
-            <span className="badge-active-dot" />
-            <span>CREATIVE • DEVELOPER</span>
-            <span className="badge-card-code">SN-01</span>
+          <div className="badge-card-insert">
+            <div className="badge-photo-wrap">
+              <img src="/sajad-profile.jpg" alt="Sajad Noori" className="badge-photo" draggable="false" fetchPriority="high" />
+            </div>
+            <div className="badge-card-info">
+              <strong>Sajad Noori</strong>
+              <span>WEB DEVELOPER</span>
+            </div>
           </div>
         </div>
       </motion.div>
