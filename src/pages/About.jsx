@@ -32,20 +32,38 @@ const staggerContainer = {
 };
 
 
-/** Draggable photo ID badge with a damped spring return. */
+/** Draggable photo ID badge with coupled pendulum-like spring motion. */
 const InteractiveBadge = () => {
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotation = useTransform(x, [-135, 0, 135], [-16, 0, 16]);
+  const rotation = useMotionValue(0);
+
+  // Let the leather strap bow naturally as the badge moves below its anchor.
   const strapPath = useTransform(() => {
     const dx = x.get();
     const dy = y.get();
-    return `M 215 -12 C 215 38, ${215 + dx * 0.18} 91, ${215 + dx * 0.72} ${148 + dy}`;
+    const sway = Math.max(-34, Math.min(34, dx * 0.2));
+    return `M 215 -12 C 215 38, ${215 + sway} 88, ${215 + dx * 0.72} ${148 + dy}`;
   });
-  const returnToRest = () => {
-    animate(x, 0, { type: "spring", stiffness: 165, damping: 12, mass: 0.85 });
-    animate(y, 0, { type: "spring", stiffness: 165, damping: 12, mass: 0.85 });
+
+  const springBack = (info) => {
+    const spring = { type: "spring", stiffness: 105, damping: 15, mass: 1.05 };
+    // Carry the release velocity into the return so a fast pull has a real swing.
+    animate(x, 0, { ...spring, velocity: info.velocity.x });
+    animate(y, 0, { ...spring, velocity: info.velocity.y });
+    animate(rotation, 0, {
+      ...spring,
+      velocity: Math.max(-90, Math.min(90, info.velocity.x * 0.035)),
+    });
   };
+
+  const followDrag = (_, info) => {
+    // Approximate the angle of a hanging card around its upper attachment.
+    const angle = Math.atan2(info.offset.x, 175 + info.offset.y) * (180 / Math.PI);
+    const dragTilt = angle * 1.2 + info.velocity.x * 0.006;
+    rotation.set(Math.max(-20, Math.min(20, dragTilt)));
+  };
+
   return (
     <div className="lanyard-scene">
       <svg className="lanyard-svg" viewBox="0 0 430 560" aria-hidden="true">
@@ -58,15 +76,16 @@ const InteractiveBadge = () => {
       </svg>
       <motion.div
         className="badge-holder"
-        style={{ x, y, rotate: rotation }}
+        style={{ x, y, rotate: rotation, transformOrigin: "50% 0%" }}
         drag
         dragConstraints={{ left: -135, right: 135, top: -35, bottom: 185 }}
-        dragElastic={0.24}
+        dragElastic={0.12}
         dragMomentum={false}
-        onDragEnd={returnToRest}
-        whileDrag={{ scale: 1.035, cursor: "grabbing" }}
+        onDrag={followDrag}
+        onDragEnd={(_, info) => springBack(info)}
+        whileDrag={{ scale: 1.015, cursor: "grabbing" }}
         role="group"
-        aria-label="Draggable photo ID badge. Drag it in any direction and release to watch it swing back."
+        aria-label="Draggable photo ID badge. Pull it in any direction and release to watch it swing back."
       >
         <div className="badge-attachment" aria-hidden="true">
           <span className="badge-attachment-eyelet" />
