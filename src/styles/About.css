@@ -760,3 +760,97 @@
 @media (max-width: 900px) { .about-hero-visual { min-height: 540px; } .lanyard-scene { transform: scale(.94); transform-origin: top center; } }
 @media (max-width: 680px) { .about-hero-visual { min-height: 535px; } .lanyard-scene { transform: scale(.91); transform-origin: top center; } .floating-code-card, .floating-tech-chip { z-index: 3; } }
 @media (prefers-reduced-motion: reduce) { .badge-holder { transition: none; } }
+
+
+/* Realistic, simple ID lanyard and clear badge sleeve */
+.lanyard-scene { height: 560px; }
+.lanyard-svg { overflow: visible; }
+.badge-holder {
+  top: 145px;
+  width: 224px;
+  left: calc(50% - 112px);
+  filter: drop-shadow(0 12px 13px rgba(15, 23, 42, .2));
+}
+.badge-attachment {
+  position: relative;
+  z-index: 3;
+  width: 22px;
+  height: 31px;
+  margin: -2px auto -1px;
+  border: 1px solid #a8a29e;
+  border-radius: 4px 4px 7px 7px;
+  background: linear-gradient(90deg, #77716b, #e7e5e4 38%, #8b8580 72%, #d6d3d1);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 1px 3px rgba(0,0,0,.22);
+}
+.badge-attachment-eyelet {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  width: 8px;
+  height: 8px;
+  border: 1px solid #6b625c;
+  border-radius: 50%;
+  background: #292524;
+}
+.badge-attachment-hook {
+  position: absolute;
+  bottom: -8px;
+  left: 6px;
+  width: 9px;
+  height: 12px;
+  border: 2px solid #a8a29e;
+  border-top: 0;
+  border-radius: 0 0 7px 7px;
+}
+.badge-card {
+  position: relative;
+  padding: 7px;
+  border: 1px solid rgba(255,255,255,.9);
+  border-radius: 9px;
+  background: rgba(226, 232, 240, .24);
+  box-shadow: inset 0 0 0 1px rgba(100,116,139,.18), 0 5px 12px rgba(15,23,42,.13);
+  backdrop-filter: blur(2px);
+}
+.badge-card::before {
+  inset: 2px;
+  border: 1px solid rgba(255,255,255,.72);
+  border-radius: 6px;
+}
+.badge-card-insert {
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  color: #1f2937;
+  background: #f8fafc;
+}
+.badge-photo-wrap {
+  height: 205px;
+  border: 0;
+  border-bottom: 1px solid #d1d5db;
+  border-radius: 0;
+  background: #e5e7eb;
+  box-shadow: none;
+}
+.badge-photo { object-position: center 42%; }
+.badge-card-info {
+  gap: 3px;
+  padding: 10px 11px 11px;
+  text-align: center;
+}
+.badge-card-info strong {
+  color: #172033;
+  font-size: 15px;
+  letter-spacing: 0;
+}
+.badge-card-info > span {
+  color: #64748b;
+  font-size: 8px;
+  letter-spacing: .15em;
+}
+.badge-hint { bottom: 0; }
+@media (max-width: 900px) {
+  .lanyard-scene { transform: scale(.94); transform-origin: top center; }
+}
+@media (max-width: 680px) {
+  .lanyard-scene { transform: scale(.91); transform-origin: top center; }
+}
