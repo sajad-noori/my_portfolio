@@ -10,7 +10,7 @@ import {
   FaRegLightbulb,
   FaGraduationCap,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useTheme } from "../hooks/useTheme";
 import "../styles/About.css";
 
@@ -29,6 +29,85 @@ const staggerContainer = {
     opacity: 1,
     transition: { staggerChildren: 0.1 },
   },
+};
+
+
+/** Draggable photo ID badge with a damped spring return. */
+const InteractiveBadge = () => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotation = useTransform(x, [-135, 0, 135], [-16, 0, 16]);
+  const strapPath = useTransform(() => {
+    const dx = x.get();
+    const dy = y.get();
+    const pull = Math.max(-1, Math.min(1, dx / 135));
+    return `M 215 0 C ${170 + pull * 22} 48, ${260 + pull * 34} 82, ${215 + dx} ${148 + dy}`;
+  });
+  const returnToRest = () => {
+    animate(x, 0, { type: "spring", stiffness: 165, damping: 12, mass: 0.85 });
+    animate(y, 0, { type: "spring", stiffness: 165, damping: 12, mass: 0.85 });
+  };
+  return (
+    <div className="lanyard-scene">
+      <svg className="lanyard-svg" viewBox="0 0 430 560" aria-hidden="true">
+        <defs>
+          <linearGradient id="leather-strap" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stopColor="#3b2419" />
+            <stop offset="0.28" stopColor="#805236" />
+            <stop offset="0.52" stopColor="#b17b50" />
+            <stop offset="0.78" stopColor="#68412d" />
+            <stop offset="1" stopColor="#2e1c15" />
+          </linearGradient>
+          <linearGradient id="leather-edge" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stopColor="#d5a477" stopOpacity=".85" />
+            <stop offset="1" stopColor="#3b2419" stopOpacity=".7" />
+          </linearGradient>
+        </defs>
+        <path d="M 215 -12 L 215 12" stroke="#9ca3af" strokeWidth="13" strokeLinecap="round" />
+        <path d="M 215 -12 L 215 12" stroke="#e5e7eb" strokeWidth="7" strokeLinecap="round" />
+        <motion.path d={strapPath} fill="none" stroke="#25170f" strokeWidth="24" strokeLinecap="round" />
+        <motion.path d={strapPath} fill="none" stroke="url(#leather-strap)" strokeWidth="19" strokeLinecap="round" />
+        <motion.path d={strapPath} fill="none" stroke="url(#leather-edge)" strokeWidth="1.3" strokeLinecap="round" strokeDasharray="2 5" />
+      </svg>
+      <motion.div
+        className="badge-holder"
+        style={{ x, y, rotate: rotation }}
+        drag
+        dragConstraints={{ left: -135, right: 135, top: -35, bottom: 185 }}
+        dragElastic={0.24}
+        dragMomentum={false}
+        onDragEnd={returnToRest}
+        whileDrag={{ scale: 1.035, cursor: "grabbing" }}
+        role="group"
+        aria-label="Draggable photo ID badge. Drag it in any direction and release to watch it swing back."
+      >
+        <div className="badge-clip">
+          <span className="badge-clip-hole" />
+          <span className="badge-clip-metal" />
+          <span className="badge-clip-jaw" />
+        </div>
+        <div className="badge-card">
+          <div className="badge-card-top">
+            <span className="badge-brand-mark">SN</span>
+            <span className="badge-brand-label">PERSONAL ID</span>
+          </div>
+          <div className="badge-photo-wrap">
+            <img src="/sajad-profile.jpg" alt="Sajad Noori" className="badge-photo" draggable="false" fetchPriority="high" />
+          </div>
+          <div className="badge-card-info">
+            <strong>Sajad Noori</strong>
+            <span>WEB DEVELOPER</span>
+          </div>
+          <div className="badge-card-footer">
+            <span className="badge-active-dot" />
+            <span>CREATIVE • DEVELOPER</span>
+            <span className="badge-card-code">SN-01</span>
+          </div>
+        </div>
+      </motion.div>
+      <span className="badge-hint"><span aria-hidden="true">↔</span> Grab the badge and pull</span>
+    </div>
+  );
 };
 
 const About = () => {
@@ -162,19 +241,7 @@ const About = () => {
           </motion.div>
 
           <motion.div className="about-hero-visual" variants={fadeInUp}>
-            <div className="profile-photo-frame">
-              <div className="profile-photo-accent" />
-              <img
-                src="/sajad-profile.jpg"
-                alt="Sajad Noori outdoors"
-                className="profile-image"
-                fetchPriority="high"
-              />
-              <div className="profile-photo-caption">
-                <span className="caption-status" />
-                <span><strong>Sajad Noori</strong><small>Web Developer</small></span>
-              </div>
-            </div>
+            <InteractiveBadge />
             <div className="floating-code-card" aria-hidden="true">
               <span className="code-card-dots"><i /><i /><i /></span>
               <code><span>const</span> developer = {"{"}<br />&nbsp; passion: <b>"building"</b>,<br />&nbsp; mindset: <b>"growth"</b><br />{"}"};</code>
