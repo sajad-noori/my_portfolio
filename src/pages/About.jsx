@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import {
   FaCode,
   FaServer,
@@ -10,7 +10,7 @@ import {
   FaRegLightbulb,
   FaGraduationCap,
 } from "react-icons/fa";
-import { motion, useMotionValue, useTransform, useAnimationFrame } from "framer-motion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useTheme } from "../hooks/useTheme";
 import "../styles/About.css";
 
@@ -32,147 +32,46 @@ const staggerContainer = {
 };
 
 
-/** Draggable ID badge driven by a damped-pendulum model. */
+/** A soft, leather-like badge holder with flexible movement and springy recovery. */
 const InteractiveBadge = () => {
-  const sceneRef = useRef(null);
-  const angle = useMotionValue(0);
-  const angularVelocity = useRef(0);
-  const isDragging = useRef(false);
-  const dragStart = useRef(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotation = useMotionValue(0);
 
-  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-  const rotation = useTransform(angle, (radians) => radians * (180 / Math.PI));
-
-  // The strap endpoint follows the same circular arc as the badge attachment.
-  const strapPath = useTransform(angle, (radians) => {
-    const sceneWidth = sceneRef.current?.clientWidth || 430;
-    const horizontalScale = sceneWidth / 430;
-    const dx = (160 * Math.sin(radians)) / horizontalScale;
-    const endX = 215 + dx;
-    const endY = -12 + 160 * Math.cos(radians);
-    const controlX = 215 + dx * 0.56;
-
-    return `M 215 -12 C 215 38, ${controlX} 95, ${endX} ${endY}`;
+  // Small shape changes make the holder feel pliable rather than like a rigid pendulum.
+  const tiltX = useTransform(y, [-120, 0, 170], [7, 0, -5]);
+  const tiltY = useTransform(x, [-130, 0, 130], [-9, 0, 9]);
+  const flex = useTransform(x, [-130, 0, 130], [-3.5, 0, 3.5]);
+  const strapPath = useTransform(() => {
+    const dx = x.get();
+    const dy = y.get();
+    const bend = Math.max(-48, Math.min(48, dx * 0.28));
+    const endX = 215 + dx * 0.72;
+    const endY = 148 + dy * 0.72;
+    return `M 215 -12 C ${215 + bend * 0.15} 38, ${215 + bend + dx * 0.28} 88, ${endX} ${endY}`;
   });
 
-  // Integrate gravity and air resistance instead of independently springing x/y.
-  useAnimationFrame((_, delta) => {
-    if (isDragging.current) return;
-
-    const theta = angle.get();
-    const omega = angularVelocity.current;
-    if (Math.abs(theta) < 0.0008 && Math.abs(omega) < 0.003) {
-      angle.set(0);
-      angularVelocity.current = 0;
-      return;
-    }
-
-    const dt = Math.min(delta / 1000, 0.032);
-    if (dt <= 0) return;
-
-    const gravity = 1750;
-    const centreOfMassLength = 260;
-    const damping = 1.1;
-    const acceleration =
-      -(gravity / centreOfMassLength) * Math.sin(theta) - damping * omega;
-
-    angularVelocity.current += acceleration * dt;
-    let nextAngle = theta + angularVelocity.current * dt;
-
-    // Keep the lanyard within a believable range and soften the end of its travel.
-    const swingLimit = 1.02;
-    if (nextAngle > swingLimit || nextAngle < -swingLimit) {
-      nextAngle = clamp(nextAngle, -swingLimit, swingLimit);
-      angularVelocity.current *= -0.18;
-    }
-
-    angle.set(nextAngle);
-  });
-
-  const handlePanStart = (event) => {
-    const scene = sceneRef.current;
-    if (!scene) return;
-
-    const rect = scene.getBoundingClientRect();
-    const scaleX = rect.width / scene.clientWidth || 1;
-    const scaleY = rect.height / scene.clientHeight || 1;
-    const pointerX = (event.clientX - rect.left) / scaleX;
-    const pointerY = (event.clientY - rect.top) / scaleY;
-    const anchorX = scene.clientWidth / 2;
-    const anchorY = -12;
-    const dx = pointerX - anchorX;
-    const dy = pointerY - anchorY;
-
-    dragStart.current = {
-      pointerX,
-      pointerY,
-      pointerAngle: Math.atan2(dx, dy),
-      initialAngle: angle.get(),
-      radius: Math.max(145, Math.hypot(dx, dy)),
-      anchorX,
-      anchorY,
-      scaleX,
-      scaleY,
-    };
-
-    angularVelocity.current = 0;
-    isDragging.current = true;
+  const release = (info) => {
+    // A slightly elastic return with carried momentum, like a soft item settling.
+    const spring = { type: "spring", stiffness: 150, damping: 17, mass: 0.85 };
+    animate(x, 0, { ...spring, velocity: info.velocity.x * 0.55 });
+    animate(y, 0, { ...spring, velocity: info.velocity.y * 0.45 });
+    animate(rotation, 0, {
+      ...spring,
+      velocity: Math.max(-55, Math.min(55, info.velocity.x * 0.025)),
+    });
   };
 
-  const handlePan = (_, info) => {
-    const state = dragStart.current;
-    if (!state) return;
-
-    const pointerX = state.pointerX + info.offset.x / state.scaleX;
-    const pointerY = state.pointerY + info.offset.y / state.scaleY;
-    const pointerAngle = Math.atan2(
-      pointerX - state.anchorX,
-      pointerY - state.anchorY
-    );
-    const angleDelta = Math.atan2(
-      Math.sin(pointerAngle - state.pointerAngle),
-      Math.cos(pointerAngle - state.pointerAngle)
-    );
-
-    angle.set(clamp(state.initialAngle + angleDelta, -0.92, 0.92));
-  };
-
-  const handlePanEnd = (_, info) => {
-    const state = dragStart.current;
-    if (!state) return;
-
-    const theta = angle.get();
-    const velocityX = info.velocity.x / state.scaleX;
-    const velocityY = info.velocity.y / state.scaleY;
-
-    // Project the release velocity onto the pendulum's direction of travel.
-    const tangentialVelocity =
-      velocityX * Math.cos(theta) + velocityY * Math.sin(theta);
-    angularVelocity.current = clamp(
-      tangentialVelocity / state.radius,
-      -4.5,
-      4.5
-    );
-
-    isDragging.current = false;
-    dragStart.current = null;
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-      event.preventDefault();
-      const direction = event.key === "ArrowLeft" ? -1 : 1;
-      angle.set(clamp(angle.get() + direction * 0.12, -0.92, 0.92));
-      angularVelocity.current = direction * 1.35;
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      angle.set(0);
-      angularVelocity.current = 0;
-    }
+  const followDrag = (_, info) => {
+    // The holder twists and flexes slightly under force, but never behaves like a hard pendulum.
+    const horizontalPull = info.offset.x;
+    const verticalPull = info.offset.y;
+    const targetRotation = horizontalPull * 0.055 - verticalPull * 0.018;
+    rotation.set(Math.max(-13, Math.min(13, targetRotation)));
   };
 
   return (
-    <div className="lanyard-scene" ref={sceneRef}>
+    <div className="lanyard-scene">
       <svg className="lanyard-svg" viewBox="0 0 430 560" aria-hidden="true">
         <path d="M 215 -12 L 215 18" stroke="#171717" strokeWidth="22" strokeLinecap="round" />
         <path d="M 215 -12 L 215 18" stroke="#4b3528" strokeWidth="17" strokeLinecap="round" />
@@ -181,17 +80,27 @@ const InteractiveBadge = () => {
         <motion.path d={strapPath} fill="none" stroke="#4b3528" strokeWidth="17" strokeLinecap="round" />
         <motion.path d={strapPath} fill="none" stroke="#a1846b" strokeWidth="1" strokeDasharray="2 5" opacity=".8" />
       </svg>
-
       <motion.div
         className="badge-holder"
-        style={{ rotate: rotation, transformOrigin: "50% -157px" }}
-        onPanStart={handlePanStart}
-        onPan={handlePan}
-        onPanEnd={handlePanEnd}
-        onKeyDown={handleKeyDown}
+        style={{
+          x,
+          y,
+          rotate: rotation,
+          rotateX: tiltX,
+          rotateY: tiltY,
+          skewX: flex,
+          transformOrigin: "50% 0%",
+          transformPerspective: 900,
+        }}
+        drag
+        dragConstraints={{ left: -115, right: 115, top: -24, bottom: 145 }}
+        dragElastic={0.18}
+        dragMomentum
+        dragTransition={{ bounceStiffness: 190, bounceDamping: 18, power: 0.24 }}
+        onDrag={followDrag}
+        onDragEnd={(_, info) => release(info)}
         role="group"
-        tabIndex={0}
-        aria-label="Interactive ID badge. Drag sideways and release to swing it; use the left and right arrow keys when focused."
+        aria-label="Draggable flexible ID badge. Pull it in different directions and release to watch it softly flex and settle."
       >
         <div className="badge-attachment" aria-hidden="true">
           <span className="badge-attachment-eyelet" />
