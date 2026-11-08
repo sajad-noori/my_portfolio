@@ -879,3 +879,16 @@
   outline-offset: 7px;
   border-radius: 10px;
 }
+
+
+/* Soft, pliable response for the interactive badge */
+.badge-holder {
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+.badge-card {
+  transform-origin: 50% 0%;
+  will-change: transform;
+}
