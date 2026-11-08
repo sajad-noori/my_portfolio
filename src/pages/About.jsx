@@ -95,7 +95,7 @@ const InteractiveBadge = () => {
         drag
         dragConstraints={{ left: -115, right: 115, top: -24, bottom: 145 }}
         dragElastic={0.18}
-        dragMomentum
+        dragMomentum={false}
         dragTransition={{ bounceStiffness: 190, bounceDamping: 18, power: 0.24 }}
         onDrag={followDrag}
         onDragEnd={(_, info) => release(info)}
