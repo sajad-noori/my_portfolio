@@ -189,7 +189,6 @@ const InteractiveBadge = () => {
         onPan={handlePan}
         onPanEnd={handlePanEnd}
         onKeyDown={handleKeyDown}
-        whileTap={{ scale: 1.01 }}
         role="group"
         tabIndex={0}
         aria-label="Interactive ID badge. Drag sideways and release to swing it; use the left and right arrow keys when focused."
