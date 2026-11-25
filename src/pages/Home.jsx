@@ -42,7 +42,7 @@ const Home = () => {
   const activeProject = featuredProjects[activeIndex];
 
   return (
-    <main className={"experiment-home " + (theme === "dark" ? "theme-dark" : "theme-light")} data-theme={theme}>
+    <div className={"experiment-home " + (theme === "dark" ? "theme-dark" : "theme-light")} data-theme={theme}>
       <div className="experiment-home__grid" aria-hidden="true" />
       <div className="experiment-home__orb experiment-home__orb--one" aria-hidden="true" />
       <div className="experiment-home__orb experiment-home__orb--two" aria-hidden="true" />
@@ -161,7 +161,7 @@ const Home = () => {
           <Link to="/about" className="experiment-bottom__link">A little more about me <FiArrowUpRight /></Link>
         </section>
       </div>
-    </main>
+    </div>
   );
 };
 

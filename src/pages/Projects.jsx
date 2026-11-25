@@ -74,7 +74,7 @@ const Projects = () => {
   const activeProject = projects.find((project) => project.id === activeId) || projects[0];
 
   return (
-    <main className={"project-experience " + (theme === "dark" ? "theme-dark" : "theme-light")} data-theme={theme}>
+    <div className={"project-experience " + (theme === "dark" ? "theme-dark" : "theme-light")} data-theme={theme}>
       <div className="project-experience__noise" aria-hidden="true" />
       <div className="project-experience__inner">
         <motion.header className="project-experience__header" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .7 }}>
@@ -120,7 +120,7 @@ const Projects = () => {
           <Link to="/contact">Have something in mind? <FiArrowUpRight /></Link>
         </footer>
       </div>
-    </main>
+    </div>
   );
 };
 
