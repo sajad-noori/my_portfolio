@@ -1,13 +1,8 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
 import {
-  FiGithub,
-  FiArrowRight,
   FiCode,
   FiLayers,
   FiZap,
-  FiPhone,
-  FiMail,
   FiStar,
   FiBriefcase,
   FiCalendar,
@@ -24,18 +19,8 @@ import { useTheme } from "../hooks/useTheme";
 import HomeHero from "../components/home/HomeHero";
 import "../styles/Home.css"; // Import the CSS file for this component
 
-// Enhanced Animation variants
 const Home = () => {
   const { theme } = useTheme();
-  const navigate = useNavigate();
-  const handleViewWorkClick = () => {
-    navigate("/projects");
-    // Scroll to top after navigation
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 100);
-  };
-
   // Experience data
   const experiences = [
     {
