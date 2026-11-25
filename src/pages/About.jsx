@@ -2,12 +2,10 @@ import React from "react";
 import {
   FaCode,
   FaServer,
-  FaMobileAlt,
   FaLaptopCode,
   FaDatabase,
   FaTools,
   FaArrowRight,
-  FaRegLightbulb,
   FaGraduationCap,
 } from "react-icons/fa";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
@@ -129,7 +127,7 @@ const About = () => {
     {
       name: "Frontend Development",
       icon: <FaLaptopCode />,
-      items: ["React", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "Bootstrap"],
+      items: ["React", "JavaScript", "TypeScript", "HTML5", "CSS3", "Tailwind CSS", "Bootstrap", "Material UI"],
     },
     {
       name: "Backend Development",
@@ -150,46 +148,18 @@ const About = () => {
 
   const experiences = [
     {
-      role: "Full Stack Developer — Personal Projects",
-      company: "Independent Projects",
-      period: "2023 – Present",
+      role: "Web Developer",
+      company: "Technical and Vocational Education and Training Authority (TVETA)",
+      period: "2025 – Present",
       description:
-        "Building full-stack applications with React, Next.js, Node.js, and MySQL. Project work includes content management, image uploads, JWT authentication, and interactive user features.",
+        "Designing, developing, and maintaining web applications for the Quality Assurance Directorate. My work includes responsive interfaces, API integration, and digital tools that support the directorate’s services and workflows.",
     },
     {
-      role: "Frontend Developer — Learning & Building",
-      company: "Portfolio & Practice Projects",
-      period: "2022 – 2023",
+      role: "System Implementation Specialist",
+      company: "Ministry of Transport and Civil Aviation",
+      period: "2024 – 2025",
       description:
-        "Created responsive web interfaces with React and Material UI, practicing CRUD workflows, authentication, reusable components, and API integration.",
-    },
-    {
-      role: "Networking Fundamentals",
-      company: "Independent Learning",
-      period: "Ongoing",
-      description:
-        "Studying networking fundamentals and CCNA topics to strengthen my understanding of networks and how web applications communicate.",
-    },
-  ];
-
-  const services = [
-    {
-      title: "Frontend Development",
-      icon: <FaCode />,
-      description:
-        "Responsive, accessible interfaces built with React, Next.js, and modern JavaScript.",
-    },
-    {
-      title: "Backend & APIs",
-      icon: <FaServer />,
-      description:
-        "Practical REST APIs and server-side features using Node.js, Express, and databases.",
-    },
-    {
-      title: "Responsive UI",
-      icon: <FaMobileAlt />,
-      description:
-        "Clean layouts that adapt smoothly to mobile, tablet, and desktop screens.",
+        "Supported the rollout of a transportation management system across relevant departments, helping move terminal operations from paper-based processes to a digital workflow. The work included preparing the system environment, coordinating implementation, training users, and supporting day-to-day adoption.",
     },
   ];
 
@@ -258,8 +228,7 @@ const About = () => {
               <span className="code-card-dots"><i /><i /><i /></span>
               <code><span>const</span> developer = {"{"}<br />&nbsp; passion: <b>"building"</b>,<br />&nbsp; mindset: <b>"growth"</b><br />{"}"};</code>
             </div>
-            <div className="floating-tech-chip">React · Node.js · MySQL</div>
-          </motion.div>
+            </motion.div>
         </motion.header>
 
         {/* Story */}
@@ -347,7 +316,7 @@ const About = () => {
           <div className="section-heading">
             <span className="section-kicker">THE JOURNEY</span>
             <h2>Learning by <span className="gradient-text">building.</span></h2>
-            <p>A snapshot of my development journey and ongoing learning.</p>
+            <p>Professional roles and practical experience.</p>
           </div>
           <div className="timeline">
             {experiences.map((exp, index) => (
@@ -365,35 +334,6 @@ const About = () => {
                   <h3>{exp.role}</h3>
                   <p className="timeline-description">{exp.description}</p>
                 </div>
-              </motion.article>
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Services */}
-        <motion.section
-          className="services-container section-block"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          variants={staggerContainer}
-        >
-          <div className="section-heading">
-            <span className="section-kicker">WHAT I CAN DO</span>
-            <h2>Turning ideas into <span className="gradient-text">products.</span></h2>
-            <p>Practical development support from interface to API.</p>
-          </div>
-          <div className="services-grid">
-            {services.map((service) => (
-              <motion.article
-                key={service.title}
-                className="service-card"
-                variants={fadeInUp}
-                whileHover={{ y: -6 }}
-              >
-                <div className="service-icon">{service.icon}</div>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
               </motion.article>
             ))}
           </div>
