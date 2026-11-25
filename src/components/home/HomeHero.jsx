@@ -1,11 +1,33 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
 import { FiArrowUpRight, FiArrowRight, FiStar } from "react-icons/fi";
 
 export default function HomeHero() {
   const navigate = useNavigate();
   const reduceMotion = useReducedMotion();
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const smoothX = useSpring(pointerX, { stiffness: 180, damping: 22, mass: 0.55 });
+  const smoothY = useSpring(pointerY, { stiffness: 180, damping: 22, mass: 0.55 });
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-13, 13]);
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [10, -10]);
+  const imageX = useTransform(smoothX, [-0.5, 0.5], [9, -9]);
+  const imageY = useTransform(smoothY, [-0.5, 0.5], [7, -7]);
+  const shineX = useTransform(smoothX, [-0.5, 0.5], ["0%", "100%"]);
+  const shineY = useTransform(smoothY, [-0.5, 0.5], ["0%", "100%"]);
+
+  const handleCardPointerMove = (event) => {
+    if (reduceMotion || event.pointerType === "touch") return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    pointerX.set((event.clientX - bounds.left) / bounds.width - 0.5);
+    pointerY.set((event.clientY - bounds.top) / bounds.height - 0.5);
+  };
+
+  const resetCardTilt = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
 
   const reveal = (delay = 0) => ({
     initial: reduceMotion ? false : { opacity: 0, y: 24 },
@@ -72,7 +94,18 @@ export default function HomeHero() {
         <div className="cinema-chrome cinema-chrome--front" aria-hidden="true" />
         <div className="cinema-glass-orb cinema-glass-orb--one" aria-hidden="true" />
         <div className="cinema-glass-orb cinema-glass-orb--two" aria-hidden="true" />
-        <div className="cinema-portrait-frame">
+        <motion.div
+          className="cinema-portrait-frame"
+          onPointerMove={handleCardPointerMove}
+          onPointerLeave={resetCardTilt}
+          style={reduceMotion ? undefined : {
+            rotateX,
+            rotateY,
+            transformPerspective: 1100,
+            transformStyle: "preserve-3d",
+          }}
+        >
+          <motion.div className="cinema-card-depth" style={reduceMotion ? undefined : { x: imageX, y: imageY }}>
           <div className="cinema-portrait-image">
             <img
               src="/sajad-profile.jpg"
@@ -80,12 +113,18 @@ export default function HomeHero() {
               fetchPriority="high"
             />
           </div>
-          <div className="cinema-portrait-shine" aria-hidden="true" />
+          <motion.div
+            className="cinema-portrait-shine"
+            aria-hidden="true"
+            style={reduceMotion ? undefined : { "--shine-x": shineX, "--shine-y": shineY }}
+          />
           <div className="cinema-frame-caption">
             <span>SAJAD NOORI</span>
             <span>DEVELOPER · CREATOR</span>
           </div>
-        </div>
+          </motion.div>
+          <div className="cinema-card-edge" aria-hidden="true" />
+        </motion.div>
         <div className="cinema-floating-code" aria-hidden="true">
           <span className="code-dot" /><span className="code-dot" /><span className="code-dot" />
           <code><b>const</b> future = <em>"build"</em>;</code>
