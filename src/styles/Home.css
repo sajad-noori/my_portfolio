@@ -1631,3 +1631,28 @@
   .cinema-actions { flex-direction: column; align-items: stretch; }
   .cinema-button { width: 100%; }
 }
+
+/* Keep the existing lower homepage sections visually integrated with the
+   cinematic dark art direction, without changing their content or structure. */
+.home-container .feature-card,
+.home-container .experience-card {
+  color: #eaf1f8;
+  background: rgba(14, 24, 37, .78);
+  border-color: rgba(133, 181, 225, .17);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .2);
+}
+.home-container .feature-title,
+.home-container .experience-position,
+.home-container .experience-section .section-title,
+.home-container .achievements-title { color: #f3f7fb; }
+.home-container .feature-description,
+.home-container .experience-description,
+.home-container .achievement-item { color: #aab8c8; }
+.home-container .experience-company { color: #82bfff; }
+.home-container .experience-duration,
+.home-container .experience-location { color: #91a1b4; }
+.home-container .feature-card:hover,
+.home-container .experience-card:hover {
+  border-color: rgba(117, 185, 255, .4);
+  box-shadow: 0 24px 65px rgba(0, 0, 0, .34), 0 0 35px rgba(72, 143, 207, .08);
+}
