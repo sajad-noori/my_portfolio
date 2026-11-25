@@ -216,7 +216,7 @@ const About = () => {
                 <span><strong>Web development</strong><small>Frontend + backend</small></span>
               </div>
               <div className="quick-fact">
-                <span className="quick-fact-icon"><FaRegLightbulb /></span>
+                <span className="quick-fact-icon"><FaGraduationCap /></span>
                 <span><strong>Always learning</strong><small>Curious by nature</small></span>
               </div>
             </div>
