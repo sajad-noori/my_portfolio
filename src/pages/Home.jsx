@@ -68,33 +68,6 @@ const Home = () => {
         }`}
         data-theme={theme}
       >
-        {/* Enhanced Background Elements */}
-        <div className="background-blobs">
-          <div className="blob blob-1"></div>
-          <div className="blob blob-2"></div>
-          <div className="blob blob-3"></div>
-        </div>
-
-        {/* Floating Particles */}
-        <div className="particles-container">
-          {particles.map((particle, index) => (
-            <motion.div
-              key={index}
-              className="particle"
-              style={{
-                left: `${particle.x}%`,
-                top: `${particle.y}%`,
-              }}
-              variants={floatingVariants}
-              animate="animate"
-              transition={{ delay: particle.delay }}
-            >
-              <particle.icon className="particle-icon" />
-            </motion.div>
-          ))}
-        </div>
-
-
         <div className="content-container">
           <HomeHero />
 
